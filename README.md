@@ -51,6 +51,8 @@ orchestrator. Every inter-agent message is streamed to the admin dashboard.
 
 ## 🧰 Tech Stack
 
+![Tech Stack](./tech-stack.png)
+
 **Backend** — Python 3.11 · FastAPI · async WebSockets · SQLAlchemy
 (SQLite local → PostgreSQL deploy) · Alembic · JWT (python-jose) + bcrypt ·
 CrewAI · OpenAI / Anthropic · `hypothesis` (property-based tests)
