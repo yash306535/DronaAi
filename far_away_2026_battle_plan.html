@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAR AWAY 2026 — DRONA AI Battle Plan</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.11.0/dist/tabler-icons.min.css">
+<style>
+  :root {
+    --color-text-primary: #1a1d24;
+    --color-text-secondary: #5a6270;
+    --color-text-tertiary: #8a93a2;
+    --color-text-info: #1b6ec2;
+    --color-text-success: #1a7f4b;
+    --color-text-warning: #9a6700;
+    --color-text-danger: #c0362c;
+
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f4f6f9;
+    --color-background-info: #e8f1fb;
+    --color-background-success: #e6f5ec;
+    --color-background-warning: #fdf4e0;
+    --color-background-danger: #fce9e7;
+
+    --color-border-secondary: #cfd6e0;
+    --color-border-tertiary: #e3e8ee;
+    --color-border-info: #9cc4ec;
+    --color-border-warning: #e9c97a;
+    --color-border-danger: #eaa9a2;
+
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #eef1f5;
+    color: var(--color-text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px 22px 64px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #1b2a4a 0%, #2f4576 60%, #b3243b 140%);
+    border-radius: var(--border-radius-lg);
+    padding: 26px 28px;
+    color: #fff;
+    margin-bottom: 22px;
+  }
+  .hero h1 { margin: 0; font-size: 30px; letter-spacing: 0.06em; font-weight: 700; }
+  .hero .sub { margin-top: 6px; font-size: 13px; opacity: 0.85; letter-spacing: 0.12em; text-transform: uppercase; }
+  .hero .tag { margin-top: 12px; font-size: 14px; opacity: 0.95; }
+  .card-wrap {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 6px 22px 22px;
+  }
+  a { color: var(--color-text-info); }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="hero">
+  <h1>FAR&nbsp;AWAY 2026</h1>
+  <div class="sub">DRONA AI · Round 1 Battle Plan</div>
+  <div class="tag">Autonomous Multi-Agent Intelligence for Examination Integrity</div>
+</div>
+<div class="card-wrap">
+<h2 style="font-size:13px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin:18px 0 0">Complete winning plan — domain, features, roadmap, tech stack, submission checklist</h2>
+<div style="padding:1rem 0">
+
+<div style="background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);border-radius:var(--border-radius-md);padding:10px 16px;margin-bottom:18px;display:flex;align-items:center;gap:10px">
+  <i class="ti ti-clock" style="font-size:18px;color:var(--color-text-warning)" aria-hidden="true"></i>
+  <div>
+    <div style="font-size:13px;font-weight:500;color:var(--color-text-warning)">June 14, 11:59 PM IST — ~72 hours remaining. Every hour counts.</div>
+    <div style="font-size:12px;color:var(--color-text-warning)">Ship P1 → you qualify. Ship P1+P2 → you're in the top 100. Ship all → you go to Delhi.</div>
+  </div>
+</div>
+
+<div style="display:flex;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:18px;overflow-x:auto">
+  <button id="btn-domain" onclick="sw('domain')" style="background:none;border:none;border-bottom:2px solid var(--color-text-primary);padding:8px 14px;font-size:13px;font-weight:500;color:var(--color-text-primary);cursor:pointer;white-space:nowrap">Domain & Project</button>
+  <button id="btn-features" onclick="sw('features')" style="background:none;border:none;border-bottom:2px solid transparent;padding:8px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;white-space:nowrap">MVP Features</button>
+  <button id="btn-roadmap" onclick="sw('roadmap')" style="background:none;border:none;border-bottom:2px solid transparent;padding:8px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;white-space:nowrap">3-Day Sprint</button>
+  <button id="btn-stack" onclick="sw('stack')" style="background:none;border:none;border-bottom:2px solid transparent;padding:8px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;white-space:nowrap">Tech Stack</button>
+  <button id="btn-submit" onclick="sw('submit')" style="background:none;border:none;border-bottom:2px solid transparent;padding:8px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;white-space:nowrap">Checklist</button>
+</div>
+
+<div id="pane-domain">
+  <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:12px">5 themes available. Here's which one maximizes your win probability in 72 hours:</div>
+  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:22px">
+    <div style="background:var(--color-background-info);border:2px solid var(--color-border-info);border-radius:var(--border-radius-lg);padding:13px 15px">
+      <div style="display:flex;align-items:flex-start;gap:12px">
+        <i class="ti ti-robot" style="font-size:22px;color:var(--color-text-info);margin-top:1px" aria-hidden="true"></i>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span style="font-size:14px;font-weight:500;color:var(--color-text-info)">Agentic & Autonomous Systems</span>
+            <span style="background:var(--color-background-success);color:var(--color-text-success);font-size:11px;font-weight:500;padding:2px 8px;border-radius:var(--border-radius-md)">⭐ Best choice</span>
+          </div>
+          <div style="font-size:12px;color:var(--color-text-info);margin-top:4px;line-height:1.6">Hottest AI category in 2026 · Maximum technical depth · Demo-ready with CrewAI in &lt;4h · Apply to any real-world domain · Judges haven't seen a well-built multi-agent system from an Indian team yet</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:11px 15px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <i class="ti ti-train" style="font-size:20px;color:var(--color-text-secondary)" aria-hidden="true"></i>
+        <div style="flex:1"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Railways</span><span style="background:var(--color-background-warning);color:var(--color-text-warning);font-size:11px;padding:2px 7px;border-radius:var(--border-radius-md)">Strong backup</span></div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">India–Japan resonance · Real impact · Needs heavy data/simulation work to demo well</div></div>
+      </div>
+    </div>
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:11px 15px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <i class="ti ti-pencil" style="font-size:20px;color:var(--color-text-secondary)" aria-hidden="true"></i>
+        <div style="flex:1"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Examinations</span><span style="background:var(--color-background-warning);color:var(--color-text-warning);font-size:11px;padding:2px 7px;border-radius:var(--border-radius-md)">Strong backup</span></div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Very India-relevant · Emotionally resonant · Crowded — many teams target this, needs differentiation</div></div>
+      </div>
+    </div>
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:11px 15px;opacity:0.65">
+      <div style="display:flex;align-items:center;gap:12px"><i class="ti ti-rocket" style="font-size:20px;color:var(--color-text-secondary)" aria-hidden="true"></i><div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Space & Aerospace</span><span style="background:var(--color-background-secondary);color:var(--color-text-secondary);font-size:11px;padding:2px 7px;border-radius:var(--border-radius-md)">Skip</span></div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Hardware-heavy · Hard to demo in 72 hours · High risk</div></div></div>
+    </div>
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:11px 15px;opacity:0.65">
+      <div style="display:flex;align-items:center;gap:12px"><i class="ti ti-truck-delivery" style="font-size:20px;color:var(--color-text-secondary)" aria-hidden="true"></i><div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Logistics & Transit</span><span style="background:var(--color-background-secondary);color:var(--color-text-secondary);font-size:11px;padding:2px 7px;border-radius:var(--border-radius-md)">Skip</span></div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Competitive space · Strong commercial players already exist</div></div></div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:20px">
+    <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:14px">
+      <div style="background:var(--color-background-info);width:52px;height:52px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i class="ti ti-brain" style="font-size:26px;color:var(--color-text-info)" aria-hidden="true"></i>
+      </div>
+      <div>
+        <div style="font-size:20px;font-weight:500;color:var(--color-text-primary)">DRONA AI</div>
+        <div style="font-size:13px;color:var(--color-text-secondary);margin-top:2px">Autonomous Multi-Agent Intelligence System for Examination Integrity</div>
+        <div style="font-size:12px;color:var(--color-text-tertiary);margin-top:3px;font-style:italic">After Dronacharya — the legendary guru who tested Arjuna with uncompromising precision</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center"><div style="font-size:22px;font-weight:500;color:var(--color-text-primary)">5</div><div style="font-size:11px;color:var(--color-text-secondary)">Autonomous agents</div></div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center"><div style="font-size:22px;font-weight:500;color:var(--color-text-primary)">22M+</div><div style="font-size:11px;color:var(--color-text-secondary)">JEE/NEET students/yr</div></div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center"><div style="font-size:22px;font-weight:500;color:var(--color-text-primary)">₹1200cr</div><div style="font-size:11px;color:var(--color-text-secondary)">Estimated fraud impact</div></div>
+    </div>
+    <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:14px">India's examination system is being destroyed by paper leaks, impersonation, and mass cheating (NEET 2024 was a national scandal). DRONA AI deploys 5 coordinated autonomous agents that prevent cheating, generate unique per-student questions, monitor sessions in real-time, and deliver intelligent post-exam analytics. During your demo, judges see agents <em>talking to each other</em> on screen and making real-time decisions. That is the demo that wins.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)"><i class="ti ti-eye" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i><div><div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">Guardian</div><div style="font-size:11px;color:var(--color-text-secondary)">AI face + eye proctoring</div></div></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)"><i class="ti ti-pencil-check" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i><div><div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">Architect</div><div style="font-size:11px;color:var(--color-text-secondary)">Unique question generation</div></div></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)"><i class="ti ti-shield-check" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i><div><div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">Sentinel</div><div style="font-size:11px;color:var(--color-text-secondary)">Cheating pattern detection</div></div></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)"><i class="ti ti-chart-bar" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i><div><div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">Analyst</div><div style="font-size:11px;color:var(--color-text-secondary)">Post-exam analytics</div></div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);margin-bottom:14px"><i class="ti ti-bell-ringing" style="font-size:16px;color:var(--color-text-secondary)" aria-hidden="true"></i><div><div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">Herald</div><div style="font-size:11px;color:var(--color-text-secondary)">Real-time alert broadcasting to admins and invigilators</div></div></div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px">
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.6"><i class="ti ti-map-pin" style="font-size:14px;vertical-align:-2px;margin-right:6px" aria-hidden="true"></i><strong style="color:var(--color-text-primary)">Japan connection (Round 3):</strong> Japan's 共通テスト (university entrance exam) is one of the world's most integrity-focused systems. DRONA AI's philosophy directly parallels Japan's rigorous anti-cheating culture — a story that resonates powerfully in Tokyo.</div>
+    </div>
+  </div>
+</div>
+
+<div id="pane-features" style="display:none">
+  <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;font-size:12px;align-items:center">
+    <span style="color:var(--color-text-secondary)">Priority:</span>
+    <span style="background:var(--color-background-danger);color:var(--color-text-danger);padding:2px 8px;border-radius:var(--border-radius-md);font-weight:500">P1 · Must ship</span>
+    <span style="background:var(--color-background-warning);color:var(--color-text-warning);padding:2px 8px;border-radius:var(--border-radius-md);font-weight:500">P2 · Should ship</span>
+    <span style="background:var(--color-background-success);color:var(--color-text-success);padding:2px 8px;border-radius:var(--border-radius-md);font-weight:500">P3 · Bonus</span>
+  </div>
+
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 8px">Priority 1 — Build these no matter what (Day 1–2)</div>
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-danger);color:var(--color-text-danger);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P1</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Multi-agent orchestration backbone</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~4h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">CrewAI framework with 5 named, role-defined agents. Each has a role, goal, and backstory. Orchestrator delegates tasks between agents. This is the technical centerpiece — show agents collaborating in your demo video.</div>
+        <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap"><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Technical Depth</span><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Innovation</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-danger);color:var(--color-text-danger);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P1</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Guardian Agent — AI proctoring</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~3h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">MediaPipe FaceMesh + eye-gaze estimation in the browser. Detects face absence, multiple faces, and prolonged gaze-away. No server round-trip needed — runs locally in WebAssembly.</div>
+        <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap"><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Real-World Impact</span><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Execution Quality</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-danger);color:var(--color-text-danger);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P1</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Architect Agent — unique question generation</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~3h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">Claude API (claude-sonnet-4-6) generates a unique exam paper per student — no two identical. Supports MCQ, short answer, and numerical. Paper leaks become impossible by design.</div>
+        <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap"><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Innovation</span><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Scalability</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-danger);color:var(--color-text-danger);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P1</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Live admin dashboard with agent activity feed</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~4h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">React dashboard showing all 5 agents' real-time status, inter-agent messages, active alerts, and student session grid. WebSocket-powered. This is what judges watch during your demo — it must look live and impressive.</div>
+        <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap"><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Design & UX</span><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Execution Quality</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-danger);color:var(--color-text-danger);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P1</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Student exam portal</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~3h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">Clean exam UI: live webcam proctoring overlay, AI-generated question display, countdown timer, answer submission. Must look polished — this is the user-facing product judges evaluate for UX.</div>
+        <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap"><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Design & UX</span><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Engineering Quality</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-danger);color:var(--color-text-danger);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P1</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Herald Agent — real-time alert pipeline</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~2h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">When Guardian/Sentinel flags an anomaly, Herald broadcasts an alert to admin dashboard (WebSocket) and optional email. Completes the autonomous end-to-end loop: detect → decide → act → notify.</div>
+        <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap"><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Real-World Impact</span><span style="background:var(--color-background-info);color:var(--color-text-info);font-size:10px;padding:2px 6px;border-radius:4px">Technical Depth</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 8px">Priority 2 — Ship these for top-100 ranking (Day 2–3)</div>
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-warning);color:var(--color-text-warning);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P2</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Sentinel Agent — behavioral fraud detection</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~3h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">Detects tab-switching, copy-paste events, answer timing anomalies, and identical answer patterns across students using lightweight ML. Each flag has an explainability score (not just "cheating detected").</div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-warning);color:var(--color-text-warning);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P2</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Agent communication visualization</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~2h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">Live log panel showing timestamped messages between agents (e.g. "Guardian → Herald: Face absent for 8s in Session #4"). This is the single most impressive visual for the demo — it proves multi-agent coordination is real.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-warning);color:var(--color-text-warning);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P2</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Analyst Agent — post-exam intelligence</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~2h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">After exam ends, Analyst generates: per-student performance report, question difficulty heatmap, anomaly summary, and AI-written improvement suggestions per student. Shows scalability and practical value.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-warning);color:var(--color-text-warning);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P2</span>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Role-based access control</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~2h</span></div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px;line-height:1.6">Three roles: Admin (full dashboard), Invigilator (session monitoring only), Student (exam portal). JWT auth, different views per role. Shows engineering quality and production-readiness.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 8px">Priority 3 — If you have time left (impresses judges, not required)</div>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-success);color:var(--color-text-success);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P3</span>
+      <div style="flex:1"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Voice accessibility mode</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~2h</span></div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px">Web Speech API for voice-input answers. Inclusive design for visually impaired or differently-abled students. Judges from Japan especially appreciate inclusive product thinking.</div></div>
+    </div>
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-success);color:var(--color-text-success);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P3</span>
+      <div style="flex:1"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">AI-generated PDF exam report</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~2h</span></div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px">After exam, Analyst generates a downloadable PDF performance report per student using reportlab/pdfkit. Tangible output that shows real-world completeness.</div></div>
+    </div>
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;display:flex;gap:10px">
+      <span style="background:var(--color-background-success);color:var(--color-text-success);font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;white-space:nowrap;height:fit-content;margin-top:2px">P3</span>
+      <div style="flex:1"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Question fairness audit agent</span><span style="font-size:11px;color:var(--color-text-tertiary);white-space:nowrap">~3h</span></div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:3px">A 6th agent that reviews Architect's generated questions for cultural bias, difficulty calibration, and language clarity. Shows thoughtful AI ethics — highly differentiated from all other teams.</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="pane-roadmap" style="display:none">
+  <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px">AI-assisted coding (Cursor/Copilot) is explicitly allowed and expected. Use it aggressively. These estimates assume solo developer + AI tools.</div>
+  
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden">
+      <div style="background:var(--color-background-info);padding:10px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;font-weight:500;color:var(--color-text-info)">Day 1 — June 12 · Foundation</span><span style="font-size:12px;color:var(--color-text-info)">Build the engine</span></div>
+      <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">09:00–10:00</span><span style="color:var(--color-text-secondary)">GitHub repo init, README skeleton, project structure, environment setup</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">10:00–13:00</span><span style="color:var(--color-text-secondary)">CrewAI setup + 5 agents defined · FastAPI backend · Claude API integration for Architect Agent</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">14:00–17:00</span><span style="color:var(--color-text-secondary)">MediaPipe FaceMesh integration (Guardian Agent) · WebSocket setup for real-time events</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">17:00–20:00</span><span style="color:var(--color-text-secondary)">React app scaffold · Basic student exam UI · Test question generation end-to-end</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">20:00–23:00</span><span style="color:var(--color-text-secondary)">Herald Agent alert pipeline · SQLite schema · Fix all Day 1 bugs · Git commit</span></div>
+        <div style="background:var(--color-background-success);border-radius:var(--border-radius-md);padding:6px 10px;margin-top:4px"><span style="font-size:11px;color:var(--color-text-success);font-weight:500">Day 1 goal: 5 agents running + one complete exam flow working locally</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden">
+      <div style="background:var(--color-background-warning);padding:10px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;font-weight:500;color:var(--color-text-warning)">Day 2 — June 13 · Build & Polish</span><span style="font-size:12px;color:var(--color-text-warning)">Add depth</span></div>
+      <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">09:00–12:00</span><span style="color:var(--color-text-secondary)">Admin dashboard: agent status cards, real-time session grid, alert feed (P1 completion)</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">13:00–15:00</span><span style="color:var(--color-text-secondary)">Agent communication log visualizer (P2) · Sentinel behavioral detection (P2)</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">15:00–18:00</span><span style="color:var(--color-text-secondary)">Analyst post-exam dashboard · Role-based auth (JWT) · UI polish across all pages</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">18:00–21:00</span><span style="color:var(--color-text-secondary)">Full end-to-end test: start exam → proctor → detect anomaly → alert admin → analyze. Fix all bugs.</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">21:00–23:00</span><span style="color:var(--color-text-secondary)">Deploy to Render.com · Test on deployed URL · Seed demo data · Git commit</span></div>
+        <div style="background:var(--color-background-success);border-radius:var(--border-radius-md);padding:6px 10px;margin-top:4px"><span style="font-size:11px;color:var(--color-text-success);font-weight:500">Day 2 goal: P1 + P2 all working on a live URL that judges can visit</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden">
+      <div style="background:var(--color-background-danger);padding:10px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;font-weight:500;color:var(--color-text-danger)">Day 3 — June 14 · Ship Day</span><span style="font-size:12px;color:var(--color-text-danger)">Submit before 23:59 IST</span></div>
+      <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">09:00–11:00</span><span style="color:var(--color-text-secondary)">Final UI polish · Mobile responsiveness · Fix edge cases · Seed compelling demo data</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">11:00–13:00</span><span style="color:var(--color-text-secondary)">Record 4–5 min demo video: problem → agents intro → live exam session → anomaly detection → analytics</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">14:00–17:00</span><span style="color:var(--color-text-secondary)">Create 12-slide deck: Problem → Market → DRONA AI intro → 5 agents → architecture → demo → roadmap → team</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">17:00–20:00</span><span style="color:var(--color-text-secondary)">GitHub README: setup instructions, architecture diagram, screenshots, live demo link, tech stack</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-tertiary);white-space:nowrap;min-width:80px">20:00–22:00</span><span style="color:var(--color-text-secondary)">Final review: does every checklist item pass? Submission form filled out and verified.</span></div>
+        <div style="display:flex;gap:10px;font-size:12px"><span style="color:var(--color-text-danger);font-weight:500;white-space:nowrap;min-width:80px">22:00–23:30</span><span style="color:var(--color-text-danger);font-weight:500">Submit on Unstop. Do NOT wait until 23:59. Buffer for server issues.</span></div>
+        <div style="background:var(--color-background-danger);border-radius:var(--border-radius-md);padding:6px 10px;margin-top:4px"><span style="font-size:11px;color:var(--color-text-danger);font-weight:500">Day 3 goal: submitted by 22:00. Not 23:58. 22:00.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="pane-stack" style="display:none">
+  <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px">Every choice below is optimized for build speed + judge impression. Don't change what you know well — these are defaults if you're flexible.</div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">Agent framework</div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:8px">
+        <i class="ti ti-topology-star" style="font-size:20px;color:var(--color-text-info);margin-top:1px" aria-hidden="true"></i>
+        <div><div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">CrewAI 0.95+</div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Role-based multi-agent framework. Fastest to MVP. Define 5 agents in &lt;50 lines. pip install crewai. <em>Why not LangGraph?</em> LangGraph is better for production but has a steep learning curve. CrewAI ships in hours.</div></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">LLM</div>
+      <div style="display:flex;align-items:flex-start;gap:12px">
+        <i class="ti ti-sparkles" style="font-size:20px;color:var(--color-text-info);margin-top:1px" aria-hidden="true"></i>
+        <div><div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">Claude claude-sonnet-4-6 (Anthropic API)</div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">Best for structured output, question generation, and agent reasoning. Free tier available. Set ANTHROPIC_API_KEY. The Architect and Analyst agents both use this.</div></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Backend + real-time</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-server" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">FastAPI + Python 3.11</div><div style="font-size:11px;color:var(--color-text-secondary)">Async, fast, auto-docs at /docs</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-antenna" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">WebSockets (native FastAPI)</div><div style="font-size:11px;color:var(--color-text-secondary)">Agent events → admin dashboard live</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-database" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">SQLite → PostgreSQL</div><div style="font-size:11px;color:var(--color-text-secondary)">SQLite for local, Postgres for deploy</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-lock" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">JWT (python-jose)</div><div style="font-size:11px;color:var(--color-text-secondary)">Role-based auth, 3 roles</div></div></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Frontend</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-brand-react" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">React 18 + Vite</div><div style="font-size:11px;color:var(--color-text-secondary)">Fast HMR, simple setup</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-palette" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">Tailwind CSS</div><div style="font-size:11px;color:var(--color-text-secondary)">Rapid UI without custom CSS</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-camera" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">MediaPipe FaceMesh</div><div style="font-size:11px;color:var(--color-text-secondary)">In-browser CV, no server needed</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-chart-line" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">Recharts</div><div style="font-size:11px;color:var(--color-text-secondary)">Analytics charts, zero config</div></div></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Deployment (free tier)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-cloud-upload" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">Render.com (backend)</div><div style="font-size:11px;color:var(--color-text-secondary)">Python service, free, auto-deploys from GitHub</div></div></div>
+        <div style="display:flex;align-items:flex-start;gap:8px"><i class="ti ti-bolt" style="font-size:16px;color:var(--color-text-secondary);margin-top:2px" aria-hidden="true"></i><div><div style="font-size:13px;font-weight:500;color:var(--color-text-primary)">Vercel (frontend)</div><div style="font-size:11px;color:var(--color-text-secondary)">React, instant deploy, free HTTPS</div></div></div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px">
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.6">
+        <strong style="color:var(--color-text-primary)">AI-assisted coding tip:</strong> Use Cursor or Copilot for all boilerplate. Paste your project structure + feature description → get 80% of the code instantly. The hackathon explicitly encourages "vibe coding and AI-assisted development." Use every tool available.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="pane-submit" style="display:none">
+  <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px">Check every item before submitting. Judges review GitHub commit history — a repo with only 1 commit at 11:58 PM looks suspicious.</div>
+  <div style="display:flex;flex-direction:column;gap:6px" id="checklist-list">
+  </div>
+  <div style="margin-top:14px;font-size:12px;color:var(--color-text-secondary)">Progress: <span id="check-progress">0</span> / <span id="check-total">0</span> items</div>
+  <div style="margin-top:12px;font-size:12px;color:var(--color-text-tertiary)">Tip: ask Kiro to "scaffold the DRONA AI repo and write the GitHub README" when you're ready to start building.</div>
+</div>
+
+</div>
+
+<script>
+const checks = [
+  { cat: 'GitHub', items: ['Repo is public', 'README has project description, problem statement, and tech stack', 'README has setup/run instructions', 'README has screenshots and live demo link', 'Source code is clean, not just one massive file', 'Commit history shows day-by-day progress (not 1 giant commit)'] },
+  { cat: 'Video (choose 1: 4–5 min recommended)', items: ['Opens with the problem statement (India exam fraud)', 'Shows all 5 agents on screen and explains each one', 'Demonstrates a live exam session with proctoring active', 'Triggers an anomaly and shows the agent alert firing', 'Shows admin dashboard with agent communication log', 'Ends with architecture slide and roadmap'] },
+  { cat: 'Presentation (max 15 slides)', items: ['Slide 1: DRONA AI — one-line pitch', 'Slide 2: Problem + India statistics', 'Slide 3: The 5 agents — who they are and what they do', 'Slide 4: Architecture diagram (multi-agent flow)', 'Slide 5: Live demo screenshots', 'Slide 6–10: Feature walkthroughs (Guardian, Architect, Sentinel, Analyst, Herald)', 'Slide 11: Scalability plan', 'Slide 12: Japan connection + global roadmap'] },
+  { cat: 'Submission (Unstop)', items: ['GitHub repo link added to submission form', 'Video or presentation file uploaded', 'Team members all added to the submission', 'Submitted before 22:00 IST (not 23:58 — leave buffer)', 'Confirmed submission email received'] }
+];
+
+function buildChecklist() {
+  const el = document.getElementById('checklist-list');
+  let all = 0;
+  checks.forEach(section => {
+    const header = document.createElement('div');
+    header.style.cssText = 'font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:0.06em;text-transform:uppercase;margin:10px 0 4px';
+    header.textContent = section.cat;
+    el.appendChild(header);
+    section.items.forEach((item, i) => {
+      all++;
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer';
+      row.dataset.done = '0';
+      const check = document.createElement('div');
+      check.style.cssText = 'width:16px;height:16px;border:0.5px solid var(--color-border-secondary);border-radius:3px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s';
+      const label = document.createElement('span');
+      label.style.cssText = 'font-size:12px;color:var(--color-text-secondary);line-height:1.5';
+      label.textContent = item;
+      row.appendChild(check);
+      row.appendChild(label);
+      row.onclick = function() {
+        const done = this.dataset.done === '0';
+        this.dataset.done = done ? '1' : '0';
+        check.style.background = done ? 'var(--color-text-primary)' : '';
+        check.style.borderColor = done ? 'var(--color-text-primary)' : '';
+        check.innerHTML = done ? '<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '';
+        label.style.color = done ? 'var(--color-text-primary)' : 'var(--color-text-secondary)';
+        label.style.textDecoration = done ? 'line-through' : '';
+        updateProgress();
+      };
+      el.appendChild(row);
+    });
+  });
+  document.getElementById('check-total').textContent = all;
+}
+
+function updateProgress() {
+  const done = document.querySelectorAll('[data-done="1"]').length;
+  document.getElementById('check-progress').textContent = done;
+}
+
+function sw(name) {
+  ['domain','features','roadmap','stack','submit'].forEach(t => {
+    document.getElementById('pane-'+t).style.display = t===name?'':'none';
+    const b = document.getElementById('btn-'+t);
+    b.style.borderBottom = t===name?'2px solid var(--color-text-primary)':'2px solid transparent';
+    b.style.color = t===name?'var(--color-text-primary)':'var(--color-text-secondary)';
+    b.style.fontWeight = t===name?'500':'400';
+  });
+}
+
+buildChecklist();
+</script>
+
+</div><!-- /padding wrapper -->
+</div><!-- /card-wrap -->
+</div><!-- /page -->
+</body>
+</html>
+</html>

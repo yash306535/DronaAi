@@ -1,0 +1,31 @@
+# DRONA AI backend dependencies (Python 3.11)
+
+# Web framework + ASGI server
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+
+# Persistence + migrations
+sqlalchemy==2.0.36
+alembic==1.14.0
+
+# Validation + settings/secrets
+pydantic==2.10.4
+pydantic-settings==2.7.1
+email-validator==2.2.0
+
+# Auth: JWT + password hashing
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+# bcrypt pinned <5: passlib 1.7.4's backend probe is incompatible with bcrypt 5.x
+bcrypt==4.0.1
+
+# HTTP client (LLM / OpenAI Vision calls)
+httpx==0.28.1
+
+# PDF report generation (Analyst exam report, Requirement 10.1 / P3)
+reportlab==4.5.1
+
+# Testing
+pytest==8.3.4
+hypothesis==6.122.3
+pytest-asyncio==0.25.0

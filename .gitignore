@@ -1,0 +1,26 @@
+# Secrets / environment — never commit populated env files
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Databases / local data
+*.db
+*.sqlite
+*.sqlite3
+
+# Node / frontend
+node_modules/
+dist/
+*.log
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
