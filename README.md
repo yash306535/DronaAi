@@ -68,49 +68,6 @@ CrewAI · OpenAI / Anthropic · `hypothesis` (property-based tests)
 
 ![Architecture Diagram](./architecture.png)
 
-```mermaid
-graph TB
-    subgraph Clients["🖥️ Client Layer · React + Vite (Vercel)"]
-        SP["Student Portal<br/>MediaPipe proctoring"]
-        AD["Admin Dashboard<br/>live mission control"]
-        IV["Invigilator Console"]
-    end
-
-    subgraph Gateway["⚡ FastAPI Gateway (Render)"]
-        AUTH["JWT Auth & RBAC · Rate Limit · CORS"]
-        WS["WebSocket Manager"]
-    end
-
-    subgraph Core["🧠 Application Core"]
-        ORCH["Agent Orchestrator · CrewAI"]
-        BUS["Event Bus"]
-    end
-
-    subgraph Agents["🤖 Autonomous Agents"]
-        G["Guardian"]
-        A["Architect"]
-        S["Sentinel"]
-        AN["Analyst"]
-        H["Herald"]
-        AU["Auditor"]
-    end
-
-    subgraph Data["💾 Persistence & External"]
-        DB[("PostgreSQL")]
-        VIS["OpenAI Vision"]
-        LLM["LLM"]
-    end
-
-    SP & AD & IV -->|REST + WS| AUTH
-    AUTH --> ORCH
-    ORCH --> BUS
-    BUS --> G & A & S & AN & H & AU
-    G -->|Stage-2 escalation| VIS
-    A & AN & AU --> LLM
-    H --> WS --> AD & IV
-    Agents --> DB
-```
-
 ### Two-Stage Proctoring
 
 ![Two-Stage Proctoring Pipeline](./two-stage-proctoring.png)
@@ -124,30 +81,29 @@ graph TB
 
 ## 🗂️ Project Structure
 
-```mermaid
-mindmap
-  root(("🧠 DRONA AI"))
-    ("⚙️ backend · FastAPI")
-      ("📦 app")
-        ("🚀 main.py<br/>app factory · lifespan")
-        ("🔧 core<br/>config · security · events · ws")
-        ("🔌 api<br/>auth · exams · sessions · proctoring · analytics")
-        ("🤖 agents<br/>guardian · architect · sentinel<br/>analyst · herald · auditor")
-        ("🧩 services<br/>use-case orchestration")
-        ("🗄️ repositories<br/>data access")
-        ("📐 models · schemas")
-      ("🧬 alembic<br/>migrations")
-      ("✅ tests<br/>pytest · hypothesis")
-      ("☁️ render.yaml")
-    ("💻 frontend · React + Vite")
-      ("🗺️ app<br/>router · layout")
-      ("🎨 theme<br/>navy/crimson tokens")
-      ("🧱 components<br/>shared UI")
-      ("✨ features<br/>exam · dashboard<br/>invigilator · analytics")
-      ("🔗 lib<br/>api · ws · mediapipe")
-      ("🏷️ types")
-      ("▲ vercel.json")
-    ("📖 DEPLOY.md")
+```
+DRONA AI
+├── ⚙️  backend · FastAPI
+│   ├── 📦 app
+│   │   ├── 🚀 main.py            app factory · lifespan
+│   │   ├── 🔧 core               config · security · events · ws
+│   │   ├── 🔌 api                auth · exams · sessions · proctoring · analytics
+│   │   ├── 🤖 agents             guardian · architect · sentinel · analyst · herald · auditor
+│   │   ├── 🧩 services           use-case orchestration
+│   │   ├── 🗄️  repositories       data access
+│   │   └── 📐 models · schemas
+│   ├── 🧬 alembic               migrations
+│   ├── ✅ tests                 pytest · hypothesis
+│   └── ☁️  render.yaml
+├── 💻 frontend · React + Vite
+│   ├── 🗺️  app                   router · layout
+│   ├── 🎨 theme                 navy/crimson tokens
+│   ├── 🧱 components            shared UI
+│   ├── ✨ features              exam · dashboard · invigilator · analytics
+│   ├── 🔗 lib                   api · ws · mediapipe
+│   ├── 🏷️  types
+│   └── ▲ vercel.json
+└── 📖 DEPLOY.md
 ```
 
 ---
