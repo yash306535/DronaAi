@@ -1,7 +1,21 @@
-# DRONA AI
+<div align="center">
 
-> **Autonomous Multi-Agent Intelligence for Examination Integrity**
-> Far Away 2026 Hackathon · Theme: Agentic & Autonomous Systems
+# 🛡️ DRONA AI
+
+### Autonomous Multi-Agent Intelligence for Examination Integrity
+
+*Far Away 2026 Hackathon · Theme: Agentic & Autonomous Systems*
+
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-async-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Vite-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![CrewAI](https://img.shields.io/badge/CrewAI-orchestration-FF5A5F)](https://www.crewai.com/)
+[![Deploy](https://img.shields.io/badge/Deploy-Render%20%2B%20Vercel-000000)](./DEPLOY.md)
+
+</div>
+
+---
 
 DRONA AI deploys a crew of coordinated autonomous agents that make exam cheating
 structurally difficult: they generate a unique paper for every student, proctor
@@ -19,23 +33,23 @@ cost and latency near zero during normal exams.
 
 ---
 
-## The Agents
+## 🤖 The Agents
 
 | Agent | Role |
 |-------|------|
-| **Guardian** | Face + eye-gaze proctoring (local MediaPipe → OpenAI Vision on escalation) |
-| **Architect** | Generates a unique, equivalently-fair exam paper per student |
-| **Sentinel** | Detects behavioral fraud (tab-switching, paste, timing, answer similarity) with explainable scores |
-| **Analyst** | Post-exam analytics: score distributions, difficulty heatmaps, per-student suggestions |
-| **Herald** | Broadcasts confirmed anomalies in real time over WebSocket (+ optional email) |
-| **Auditor** *(optional)* | Reviews generated questions for cultural bias, difficulty calibration, and clarity |
+| 🛡️ **Guardian** | Face + eye-gaze proctoring (local MediaPipe → OpenAI Vision on escalation) |
+| 📐 **Architect** | Generates a unique, equivalently-fair exam paper per student |
+| 🔍 **Sentinel** | Detects behavioral fraud (tab-switching, paste, timing, answer similarity) with explainable scores |
+| 📊 **Analyst** | Post-exam analytics: score distributions, difficulty heatmaps, per-student suggestions |
+| 📡 **Herald** | Broadcasts confirmed anomalies in real time over WebSocket (+ optional email) |
+| ⚖️ **Auditor** *(optional)* | Reviews generated questions for cultural bias, difficulty calibration, and clarity |
 
 Agents are decoupled through an in-process event bus and coordinated by a CrewAI
 orchestrator. Every inter-agent message is streamed to the admin dashboard.
 
 ---
 
-## Tech Stack
+## 🧰 Tech Stack
 
 **Backend** — Python 3.11 · FastAPI · async WebSockets · SQLAlchemy
 (SQLite local → PostgreSQL deploy) · Alembic · JWT (python-jose) + bcrypt ·
@@ -48,7 +62,7 @@ CrewAI · OpenAI / Anthropic · `hypothesis` (property-based tests)
 
 ---
 
-## Architecture
+## 🏛️ Architecture
 
 ![Architecture Diagram](./architecture.png)
 
@@ -97,19 +111,16 @@ graph TB
 
 ### Two-Stage Proctoring
 
-```
-Webcam @ ~10 FPS → MediaPipe FaceMesh (browser, Stage 1)
-   ├─ normal      → update local state, NO network
-   └─ suspicious  → debounce + cooldown → capture 1 JPEG
-                     → POST /proctoring/{id}/escalate
-                       → Guardian + OpenAI Vision (Stage 2)
-                         ├─ confirmed → anomaly.detected → Herald → dashboard
-                         └─ benign    → raise local threshold, suppress
-```
+![Two-Stage Proctoring Pipeline](./two-stage-proctoring.png)
+
+> **Stage 1** screens every frame locally in the browser with MediaPipe FaceMesh
+> at ~10 FPS and zero network cost. **Stage 2** captures a single JPEG and
+> escalates to OpenAI Vision **only** when a local anomaly is debounced and
+> confirmed — keeping cloud cost and latency near zero during normal exams.
 
 ---
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```mermaid
 mindmap
@@ -139,7 +150,7 @@ mindmap
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 - Python 3.11+
@@ -185,7 +196,7 @@ an invigilator, and several students.
 
 ---
 
-## Testing
+## 🧪 Testing
 
 ```bash
 # Backend (unit + integration + property-based)
@@ -202,7 +213,7 @@ event-delivery idempotency, and integrity-score monotonicity.
 
 ---
 
-## Security Notes
+## 🔒 Security Notes
 
 - Secrets load from environment configuration only; missing required secrets
   abort startup by key name. **Never commit a populated `.env`** — it is
@@ -216,13 +227,19 @@ event-delivery idempotency, and integrity-score monotonicity.
 
 ---
 
-## Deployment
+## ☁️ Deployment
 
 See [DEPLOY.md](./DEPLOY.md) for Render (backend + PostgreSQL) and Vercel
 (frontend) setup, environment variables, and migration commands.
 
 ---
 
-## License
+## 📄 License
 
-Built for the Far Away 2026 hackathon.
+<div align="center">
+
+Built with ⚡ for the **Far Away 2026** hackathon.
+
+*Cheating, made structurally impossible.*
+
+</div>
