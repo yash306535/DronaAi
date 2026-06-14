@@ -11,9 +11,11 @@ import { AnalyticsView } from "@/features/analytics";
  */
 function PlaceholderPage({ title }: { title: string }) {
   return (
-    <section>
-      <h1 className="text-2xl font-semibold">{title}</h1>
-      <p className="mt-2 text-navy-400">Coming soon.</p>
+    <section className="mx-auto max-w-md rounded-lg border border-[#e3e8ee] bg-white p-8 text-center shadow-sm">
+      <h1 className="text-2xl font-semibold text-[#1a1d24]">{title}</h1>
+      <p className="mt-2 text-[#5a6270]">
+        The page you are looking for could not be found.
+      </p>
     </section>
   );
 }

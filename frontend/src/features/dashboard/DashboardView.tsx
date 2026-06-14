@@ -7,6 +7,15 @@ import {
   SessionTile,
 } from "@/components";
 import { tokenStore, type TokenStore } from "@/lib/tokenStore";
+import { apiClient, type ApiClient } from "@/lib/apiClient";
+import {
+  BellRing,
+  Bot,
+  Clock,
+  MessagesSquare,
+  Radio,
+  Users,
+} from "lucide-react";
 import {
   useDashboardSocket,
   type DashboardSocketOptions,
@@ -42,8 +51,13 @@ export interface DashboardViewProps {
   store?: TokenStore;
   /** Live-socket option overrides (injected fakes in tests). */
   socketOptions?: DashboardSocketOptions;
-  /** Exams shown in the top-bar selector. */
+  /**
+   * Exams shown in the top-bar selector. When omitted, the view fetches the
+   * caller's visible exams from the API on mount.
+   */
   exams?: DashboardExamOption[];
+  /** API client used to fetch exams when `exams` is not supplied. */
+  api?: Pick<ApiClient, "listExams">;
   /**
    * Pre-resolved live state. When provided the internal socket is bypassed —
    * used by tests/storybook to render deterministic snapshots without a server.
@@ -98,7 +112,8 @@ export function DashboardView({
   token,
   store = tokenStore,
   socketOptions,
-  exams = [],
+  exams,
+  api = apiClient,
   state,
 }: DashboardViewProps) {
   const resolvedToken = token ?? store.getAccessToken() ?? "";
@@ -109,7 +124,39 @@ export function DashboardView({
   const live = useDashboardSocket(resolvedToken, socketOptions);
   const dash = state ?? live;
 
-  const [examId, setExamId] = useState<string>(exams[0]?.id ?? "");
+  // Exams for the top-bar selector. If the caller passed an explicit list we
+  // use it; otherwise fetch the caller's visible exams once on mount.
+  const [fetchedExams, setFetchedExams] = useState<DashboardExamOption[]>([]);
+  useEffect(() => {
+    if (exams !== undefined) {
+      return;
+    }
+    let cancelled = false;
+    api
+      .listExams()
+      .then((list) => {
+        if (!cancelled) {
+          setFetchedExams(
+            list.map((exam) => ({ id: exam.id, title: exam.title })),
+          );
+        }
+      })
+      .catch(() => {
+        // Leave the selector empty on failure; the dashboard still renders.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [exams, api]);
+  const examOptions = exams ?? fetchedExams;
+
+  const [examId, setExamId] = useState<string>("");
+  // Default the selection to the first exam once options are available.
+  useEffect(() => {
+    if (!examId && examOptions.length > 0) {
+      setExamId(examOptions[0].id);
+    }
+  }, [examOptions, examId]);
   const clock = useLiveClock();
 
   const status = connectionStatus(dash.connected, dash.degraded);
@@ -121,26 +168,26 @@ export function DashboardView({
   );
 
   return (
-    <div
-      data-theme="dashboard"
-      className="min-h-screen bg-surface-0 text-on-surface"
-    >
-      {/* Top bar: wordmark · exam selector · live clock · connection dot */}
-      <header className="flex flex-wrap items-center gap-4 border-b border-hairline bg-surface-1 px-6 py-3">
-        <span className="text-lg font-bold tracking-wider">DRONA AI</span>
+    <div className="flex flex-col gap-6 text-on-surface">
+      {/* Toolbar: exam selector · live clock · connection dot */}
+      <header className="flex flex-wrap items-center gap-4 rounded-lg border border-[#e3e8ee] bg-white px-4 py-3 shadow-sm">
+        <span className="flex items-center gap-2 text-sm font-semibold text-navy-900">
+          <Radio className="h-4 w-4 text-crimson-600" aria-hidden="true" />
+          Mission Control
+        </span>
 
-        <label className="flex items-center gap-2 text-xs text-on-surface-muted">
+        <label className="flex items-center gap-2 text-xs text-[#5a6270]">
           <span className="sr-only">Exam</span>
           <select
             value={examId}
             onChange={(e) => setExamId(e.target.value)}
             aria-label="Select exam"
-            className="focus-ring rounded-md border border-hairline bg-surface-2 px-2 py-1 text-xs text-on-surface"
+            className="focus-ring rounded-md border border-[#cfd6e0] bg-white px-2 py-1.5 text-xs text-[#1a1d24]"
           >
-            {exams.length === 0 ? (
+            {examOptions.length === 0 ? (
               <option value="">All exams</option>
             ) : (
-              exams.map((exam) => (
+              examOptions.map((exam) => (
                 <option key={exam.id} value={exam.id}>
                   {exam.title}
                 </option>
@@ -151,19 +198,21 @@ export function DashboardView({
 
         <div className="ml-auto flex items-center gap-4">
           <time
-            className="font-mono text-sm tabular-nums text-on-surface-muted"
+            className="flex items-center gap-1.5 font-mono text-sm tabular-nums text-[#5a6270]"
             aria-label="Current time"
           >
+            <Clock className="h-4 w-4" aria-hidden="true" />
             {clock}
           </time>
           <ConnectionDot status={status} />
         </div>
       </header>
 
-      <main className="flex flex-col gap-6 p-6">
+      <div className="flex flex-col gap-6">
         {/* Agent Status Strip (12.4) */}
         <section aria-label="Agent status">
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+          <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+            <Bot className="h-4 w-4" aria-hidden="true" />
             Agents
           </h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
@@ -182,11 +231,12 @@ export function DashboardView({
         <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
           {/* Session Grid (12.6) */}
           <section aria-label="Session grid">
-            <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+            <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+              <Users className="h-4 w-4" aria-hidden="true" />
               Sessions
             </h2>
             {sessionViews.length === 0 ? (
-              <p className="text-sm text-on-surface-muted">
+              <p className="rounded-lg border border-dashed border-[#cfd6e0] bg-white p-6 text-center text-sm text-[#8a93a2]">
                 No active sessions.
               </p>
             ) : (
@@ -205,12 +255,13 @@ export function DashboardView({
 
           {/* Inter-Agent Communication Log (12.3, 16.5) */}
           <section aria-label="Inter-agent communication log">
-            <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+            <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+              <MessagesSquare className="h-4 w-4" aria-hidden="true" />
               Inter-Agent Communication
             </h2>
-            <div className="flex max-h-96 flex-col gap-1.5 overflow-y-auto rounded-md border border-hairline bg-surface-1 p-3">
+            <div className="flex max-h-96 flex-col gap-1.5 overflow-y-auto rounded-lg border border-[#e3e8ee] bg-white p-3 shadow-sm">
               {dash.messages.length === 0 ? (
-                <p className="font-mono text-xs text-on-surface-muted">
+                <p className="font-mono text-xs text-[#8a93a2]">
                   Waiting for agent activity…
                 </p>
               ) : (
@@ -230,11 +281,14 @@ export function DashboardView({
 
         {/* Live Alert Feed (12.5, 16.7) */}
         <section aria-label="Alerts">
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+          <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+            <BellRing className="h-4 w-4" aria-hidden="true" />
             Live Alerts
           </h2>
           {alertViews.length === 0 ? (
-            <p className="text-sm text-on-surface-muted">No alerts yet.</p>
+            <p className="rounded-lg border border-dashed border-[#cfd6e0] bg-white p-6 text-center text-sm text-[#8a93a2]">
+              No alerts yet.
+            </p>
           ) : (
             <AlertFeed>
               {alertViews.map((alert) => (
@@ -249,7 +303,7 @@ export function DashboardView({
             </AlertFeed>
           )}
         </section>
-      </main>
+      </div>
     </div>
   );
 }

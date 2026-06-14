@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { CheckCircle2, Clock, Send } from "lucide-react";
 import { Button } from "@/components";
 import { apiClient, type ApiClient } from "@/lib/apiClient";
 import type { StudentPaper } from "@/types";
@@ -191,7 +192,7 @@ export function ExamView({
     return (
       <section className="mx-auto max-w-2xl">
         <h1 className="text-2xl font-semibold">Preparing your exam…</h1>
-        <p className="mt-2 text-navy-400">Starting your session.</p>
+        <p className="mt-2 text-[#5a6270]">Starting your session.</p>
       </section>
     );
   }
@@ -200,7 +201,7 @@ export function ExamView({
     return (
       <section className="mx-auto max-w-2xl">
         <h1 className="text-2xl font-semibold">Exam unavailable</h1>
-        <p role="alert" className="mt-2 text-crimson-400">
+        <p role="alert" className="mt-2 rounded-md bg-bg-danger px-3 py-2 text-danger">
           {error}
         </p>
       </section>
@@ -209,9 +210,10 @@ export function ExamView({
 
   if (phase === "submitted") {
     return (
-      <section className="mx-auto max-w-2xl">
-        <h1 className="text-2xl font-semibold">Exam submitted</h1>
-        <p className="mt-2 text-navy-400">
+      <section className="mx-auto max-w-2xl rounded-lg border border-[#e3e8ee] bg-white p-8 text-center shadow-sm">
+        <CheckCircle2 className="mx-auto h-12 w-12 text-success" aria-hidden="true" />
+        <h1 className="mt-3 text-2xl font-semibold">Exam submitted</h1>
+        <p className="mt-2 text-[#5a6270]">
           Your responses have been recorded. You may close this window.
         </p>
       </section>
@@ -227,17 +229,18 @@ export function ExamView({
           <h1 className="text-2xl font-semibold">Your Exam</h1>
           {durationSeconds > 0 && (
             <span
-              className="rounded-md bg-navy-800 px-3 py-1 font-mono text-lg font-semibold tabular-nums"
+              className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-3 py-1 font-mono text-lg font-semibold tabular-nums text-white"
               aria-label="Time remaining"
               role="timer"
             >
+              <Clock className="h-4 w-4" aria-hidden="true" />
               {formatRemaining(remaining)}
             </span>
           )}
         </header>
 
         {error && (
-          <p role="alert" className="text-sm font-medium text-crimson-400">
+          <p role="alert" className="rounded-md bg-bg-danger px-3 py-2 text-sm font-medium text-danger">
             {error}
           </p>
         )}
@@ -260,6 +263,7 @@ export function ExamView({
             onClick={() => void handleSubmit()}
             disabled={phase === "submitting"}
           >
+            <Send className="h-4 w-4" aria-hidden="true" />
             {phase === "submitting" ? "Submitting…" : "Submit exam"}
           </Button>
         </div>

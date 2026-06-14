@@ -35,7 +35,7 @@ export function StudentReports({ perStudent, rows }: StudentReportsProps) {
         <li
           key={row.studentId}
           data-student={row.studentId}
-          className="rounded-md border border-hairline bg-surface-1 p-3"
+          className="rounded-md border border-[#e3e8ee] bg-[#f9fafc] p-3"
         >
           <div className="flex items-center justify-between gap-2">
             <span className="font-mono text-xs text-on-surface-muted">

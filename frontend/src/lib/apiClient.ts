@@ -8,7 +8,7 @@
 //   fails, clear the store and redirect to the login page.
 // - Expose login / refresh / me helpers plus generic get/post helpers.
 
-import type { TokenPair, UserRead } from "@/types";
+import type { ExamRead, TokenPair, UserRead } from "@/types";
 import { tokenStore, type TokenStore } from "@/lib/tokenStore";
 
 /** Default API base URL when no env override is provided. */
@@ -274,6 +274,11 @@ export class ApiClient {
   /** Fetch the current authenticated user's profile. */
   me(): Promise<UserRead> {
     return this.get<UserRead>("/auth/me");
+  }
+
+  /** List exams visible to the caller (admin / invigilator). */
+  listExams(): Promise<ExamRead[]> {
+    return this.get<ExamRead[]>("/exams");
   }
 
   /** Clear stored tokens (local logout). */

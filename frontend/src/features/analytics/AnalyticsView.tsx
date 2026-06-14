@@ -1,7 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
+import {
+  BarChart3,
+  Download,
+  Grid3x3,
+  RefreshCw,
+  Search,
+  ShieldAlert,
+  Users,
+} from "lucide-react";
 import { Button } from "@/components";
 import { tokenStore, type TokenStore } from "@/lib/tokenStore";
-import { fetchExamAnalytics, type AnalyticsApi } from "@/features/analytics/api";
+import {
+  downloadExamReportPdf,
+  fetchExamAnalytics,
+  type AnalyticsApi,
+} from "@/features/analytics/api";
 import { isReportPending } from "@/features/analytics/analyticsView";
 import { ScoreDistributionChart } from "@/features/analytics/ScoreDistributionChart";
 import { DifficultyHeatmap } from "@/features/analytics/DifficultyHeatmap";
@@ -67,13 +80,12 @@ export function AnalyticsView({
   const [draftExamId, setDraftExamId] = useState<string>(examId);
 
   return (
-    <div
-      data-theme="dashboard"
-      className="min-h-screen bg-surface-0 text-on-surface"
-    >
-      <header className="flex flex-wrap items-center gap-4 border-b border-hairline bg-surface-1 px-6 py-3">
-        <span className="text-lg font-bold tracking-wider">DRONA AI</span>
-        <span className="text-sm text-on-surface-muted">Exam Analytics</span>
+    <div className="flex flex-col gap-6 text-on-surface">
+      <header className="flex flex-wrap items-center gap-4 rounded-lg border border-[#e3e8ee] bg-white px-4 py-3 shadow-sm">
+        <span className="flex items-center gap-2 text-sm font-semibold text-navy-900">
+          <BarChart3 className="h-4 w-4 text-crimson-600" aria-hidden="true" />
+          Exam Analytics
+        </span>
 
         <form
           className="ml-auto flex items-center gap-2"
@@ -82,14 +94,14 @@ export function AnalyticsView({
             setExamId(draftExamId.trim());
           }}
         >
-          <label className="flex items-center gap-2 text-xs text-on-surface-muted">
+          <label className="flex items-center gap-2 text-xs text-[#5a6270]">
             <span className="sr-only">Exam</span>
             {exams.length > 0 ? (
               <select
                 value={draftExamId}
                 onChange={(e) => setDraftExamId(e.target.value)}
                 aria-label="Select exam"
-                className="focus-ring rounded-md border border-hairline bg-surface-2 px-2 py-1 text-xs text-on-surface"
+                className="focus-ring rounded-md border border-[#cfd6e0] bg-white px-2 py-1.5 text-xs text-[#1a1d24]"
               >
                 <option value="">Choose an exam…</option>
                 {exams.map((exam) => (
@@ -105,22 +117,21 @@ export function AnalyticsView({
                 onChange={(e) => setDraftExamId(e.target.value)}
                 placeholder="Exam id"
                 aria-label="Exam id"
-                className="focus-ring rounded-md border border-hairline bg-surface-2 px-2 py-1 text-xs text-on-surface"
+                className="focus-ring rounded-md border border-[#cfd6e0] bg-white px-2 py-1.5 text-xs text-[#1a1d24]"
               />
             )}
           </label>
           <Button type="submit" disabled={draftExamId.trim().length === 0}>
+            <Search className="h-4 w-4" aria-hidden="true" />
             Load
           </Button>
         </form>
       </header>
 
       {examId.length === 0 && !data ? (
-        <main className="p-6">
-          <p className="text-sm text-on-surface-muted">
-            Enter an exam id to view its analytics.
-          </p>
-        </main>
+        <p className="rounded-lg border border-dashed border-[#cfd6e0] bg-white p-8 text-center text-sm text-[#8a93a2]">
+          Choose an exam to view its analytics.
+        </p>
       ) : (
         <AnalyticsReport key={examId} examId={examId} api={api} data={data} />
       )}
@@ -144,6 +155,28 @@ function AnalyticsReport({ examId, api, data }: AnalyticsReportProps) {
   const [report, setReport] = useState<AnalyticsViewData | undefined>(data);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownloadPdf = useCallback(async () => {
+    if (examId.length === 0) return;
+    setDownloading(true);
+    setError(null);
+    try {
+      const blob = await downloadExamReportPdf(examId);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `exam-${examId}-report.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      setError("Failed to download the PDF report.");
+    } finally {
+      setDownloading(false);
+    }
+  }, [examId]);
 
   const load = useCallback(() => {
     if (data) {
@@ -174,50 +207,58 @@ function AnalyticsReport({ examId, api, data }: AnalyticsReportProps) {
   const pending = isReportPending(report);
 
   return (
-    <main className="flex flex-col gap-6 p-6">
-      <div className="flex items-center gap-3">
+    <main className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-center gap-3">
         <h1 className="text-xl font-semibold">Analytics</h1>
         {report && (
-          <span className="font-mono text-xs text-on-surface-muted">
+          <span className="rounded-full bg-bg-info px-2.5 py-0.5 font-mono text-xs text-info">
             mean {report.summary?.mean ?? 0}
           </span>
         )}
         {pending && (
-          <span className="rounded bg-surface-2 px-2 py-0.5 text-xs text-on-surface-muted">
+          <span className="rounded-full bg-bg-warning px-2.5 py-0.5 text-xs text-warning">
             Partial report — some sections pending
           </span>
         )}
         {!data && (
-          <Button
-            className="ml-auto"
-            onClick={load}
-            disabled={loading}
-            aria-label="Refresh analytics"
-          >
-            {loading ? "Refreshing…" : "Refresh"}
-          </Button>
+          <div className="ml-auto flex items-center gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => void handleDownloadPdf()}
+              disabled={downloading || examId.length === 0}
+              aria-label="Download PDF report"
+            >
+              <Download className="h-4 w-4" aria-hidden="true" />
+              {downloading ? "Preparing…" : "PDF"}
+            </Button>
+            <Button onClick={load} disabled={loading} aria-label="Refresh analytics">
+              <RefreshCw className="h-4 w-4" aria-hidden="true" />
+              {loading ? "Refreshing…" : "Refresh"}
+            </Button>
+          </div>
         )}
       </div>
 
       {error && (
-        <p role="alert" className="text-sm text-crimson-400">
+        <p role="alert" className="rounded-md bg-bg-danger px-3 py-2 text-sm text-danger">
           {error}
         </p>
       )}
 
       {loading && !report ? (
-        <p className="text-sm text-on-surface-muted">Loading analytics…</p>
+        <p className="text-sm text-[#5a6270]">Loading analytics…</p>
       ) : !report ? (
-        <p className="text-sm text-on-surface-muted">
+        <p className="rounded-lg border border-dashed border-[#cfd6e0] bg-white p-8 text-center text-sm text-[#8a93a2]">
           No analytics available for this exam yet.
         </p>
       ) : (
         <div className="grid gap-6 lg:grid-cols-2">
           <section
             aria-label="Score distribution"
-            className="rounded-md border border-hairline bg-surface-1 p-4"
+            className="rounded-lg border border-[#e3e8ee] bg-white p-4 shadow-sm"
           >
-            <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+            <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+              <BarChart3 className="h-4 w-4" aria-hidden="true" />
               Score distribution
             </h2>
             <ScoreDistributionChart summary={report.summary} />
@@ -225,9 +266,10 @@ function AnalyticsReport({ examId, api, data }: AnalyticsReportProps) {
 
           <section
             aria-label="Anomaly summary"
-            className="rounded-md border border-hairline bg-surface-1 p-4"
+            className="rounded-lg border border-[#e3e8ee] bg-white p-4 shadow-sm"
           >
-            <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+            <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+              <ShieldAlert className="h-4 w-4" aria-hidden="true" />
               Anomaly summary
             </h2>
             <AnomalySummary summary={report.summary} />
@@ -235,9 +277,10 @@ function AnalyticsReport({ examId, api, data }: AnalyticsReportProps) {
 
           <section
             aria-label="Difficulty heatmap"
-            className="rounded-md border border-hairline bg-surface-1 p-4"
+            className="rounded-lg border border-[#e3e8ee] bg-white p-4 shadow-sm"
           >
-            <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+            <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+              <Grid3x3 className="h-4 w-4" aria-hidden="true" />
               Difficulty heatmap
             </h2>
             <DifficultyHeatmap heatmap={report.difficulty_heatmap} />
@@ -245,9 +288,10 @@ function AnalyticsReport({ examId, api, data }: AnalyticsReportProps) {
 
           <section
             aria-label="Student reports"
-            className="rounded-md border border-hairline bg-surface-1 p-4 lg:row-span-2"
+            className="rounded-lg border border-[#e3e8ee] bg-white p-4 shadow-sm lg:row-span-2"
           >
-            <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+            <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+              <Users className="h-4 w-4" aria-hidden="true" />
               Student reports
             </h2>
             <StudentReports perStudent={report.per_student} />

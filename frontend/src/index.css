@@ -49,13 +49,15 @@
     /* Focus ring — info color, used by the .focus-ring utility (16.6). */
     --focus-ring-color: #1b6ec2;
 
-    /* Default (light) surface tokens so surface-* utilities are always valid. */
-    --surface-0: #ffffff;
-    --surface-1: #f4f6f9;
-    --surface-2: #e3e8ee;
+    /* Default (light) surface tokens so surface-* utilities are always valid.
+       surface-0 is the page, surface-1 are cards (white so they lift off the
+       page), surface-2 is a subtle raised/track fill. */
+    --surface-0: #f4f6f9;
+    --surface-1: #ffffff;
+    --surface-2: #eef1f5;
     --on-surface: #1a1d24;
     --on-surface-muted: #5a6270;
-    --hairline: rgba(17, 32, 60, 0.08);
+    --hairline: rgba(17, 32, 60, 0.1);
   }
 
   /* Dark "mission control" dashboard surfaces (Requirement 16.4). */

@@ -7,17 +7,17 @@ const STATUS_META: Record<
 > = {
   initializing: {
     label: "Starting camera…",
-    dot: "bg-gold-500",
-    text: "text-gold-500",
+    dot: "bg-warning",
+    text: "text-warning",
   },
-  running: { label: "Proctoring active", dot: "bg-green-500", text: "text-green-400" },
-  webcam_error: { label: "Webcam unavailable", dot: "bg-crimson-600", text: "text-crimson-400" },
+  running: { label: "Proctoring active", dot: "bg-success", text: "text-success" },
+  webcam_error: { label: "Webcam unavailable", dot: "bg-crimson-600", text: "text-danger" },
   model_error: {
     label: "Local screening unavailable",
     dot: "bg-crimson-600",
-    text: "text-crimson-400",
+    text: "text-danger",
   },
-  stopped: { label: "Proctoring stopped", dot: "bg-navy-400", text: "text-navy-400" },
+  stopped: { label: "Proctoring stopped", dot: "bg-[#8a93a2]", text: "text-[#8a93a2]" },
 };
 
 export interface ProctoringOverlayProps {
@@ -48,11 +48,11 @@ export function ProctoringOverlay({
 
   return (
     <aside
-      className="flex w-full flex-col gap-2 rounded-md border border-navy-600 bg-navy-800 p-3"
+      className="flex w-full flex-col gap-2 rounded-lg border border-[#e3e8ee] bg-white p-3 shadow-sm"
       aria-label="Proctoring status"
     >
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-wider text-navy-400">
+        <span className="text-xs font-semibold uppercase tracking-wider text-[#8a93a2]">
           Live Proctoring
         </span>
         <span className={`flex items-center gap-1.5 text-xs font-medium ${meta.text}`}>
@@ -79,14 +79,14 @@ export function ProctoringOverlay({
           </span>
         )}
         {!showVideo && (
-          <div className="absolute inset-0 flex items-center justify-center p-2 text-center text-xs text-navy-400">
+          <div className="absolute inset-0 flex items-center justify-center p-2 text-center text-xs text-white/60">
             Camera preview unavailable
           </div>
         )}
       </div>
 
       {error && (
-        <p role="alert" className="text-xs font-medium text-crimson-400">
+        <p role="alert" className="text-xs font-medium text-danger">
           {error}
         </p>
       )}

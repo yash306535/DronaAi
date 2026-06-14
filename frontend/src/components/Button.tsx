@@ -6,7 +6,7 @@ import { cn } from "@/components/classNames";
  * - primary:     navy-800 bg, white text, hover navy-600
  * - destructive: crimson-600 bg, white text, hover crimson-400
  */
-export type ButtonVariant = "primary" | "destructive";
+export type ButtonVariant = "primary" | "secondary" | "destructive";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -14,6 +14,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary: "bg-navy-800 text-white hover:bg-navy-600",
+  secondary:
+    "border border-[#cfd6e0] bg-white text-[#1a1d24] hover:bg-[#f4f6f9]",
   destructive: "bg-crimson-600 text-white hover:bg-crimson-400",
 };
 

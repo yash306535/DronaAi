@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  BellRing,
+  Eye,
+  MonitorCheck,
+  Users,
+  X,
+} from "lucide-react";
+import {
   AlertFeed,
   AlertItem,
   Button,
@@ -83,13 +90,12 @@ export function InvigilatorView({
   const [draftExamId, setDraftExamId] = useState<string>(examId);
 
   return (
-    <div
-      data-theme="dashboard"
-      className="min-h-screen bg-surface-0 text-on-surface"
-    >
-      <header className="flex flex-wrap items-center gap-4 border-b border-hairline bg-surface-1 px-6 py-3">
-        <span className="text-lg font-bold tracking-wider">DRONA AI</span>
-        <span className="text-sm text-on-surface-muted">Invigilator Console</span>
+    <div className="flex flex-col gap-6 text-on-surface">
+      <header className="flex flex-wrap items-center gap-4 rounded-lg border border-[#e3e8ee] bg-white px-4 py-3 shadow-sm">
+        <span className="flex items-center gap-2 text-sm font-semibold text-navy-900">
+          <MonitorCheck className="h-4 w-4 text-crimson-600" aria-hidden="true" />
+          Invigilator Console
+        </span>
 
         <form
           className="ml-auto flex items-center gap-2"
@@ -98,14 +104,14 @@ export function InvigilatorView({
             setExamId(draftExamId.trim());
           }}
         >
-          <label className="flex items-center gap-2 text-xs text-on-surface-muted">
+          <label className="flex items-center gap-2 text-xs text-[#5a6270]">
             <span className="sr-only">Exam</span>
             {exams.length > 0 ? (
               <select
                 value={draftExamId}
                 onChange={(e) => setDraftExamId(e.target.value)}
                 aria-label="Select exam"
-                className="focus-ring rounded-md border border-hairline bg-surface-2 px-2 py-1 text-xs text-on-surface"
+                className="focus-ring rounded-md border border-[#cfd6e0] bg-white px-2 py-1.5 text-xs text-[#1a1d24]"
               >
                 <option value="">Choose an exam…</option>
                 {exams.map((exam) => (
@@ -121,22 +127,21 @@ export function InvigilatorView({
                 onChange={(e) => setDraftExamId(e.target.value)}
                 placeholder="Exam id"
                 aria-label="Exam id"
-                className="focus-ring rounded-md border border-hairline bg-surface-2 px-2 py-1 text-xs text-on-surface"
+                className="focus-ring rounded-md border border-[#cfd6e0] bg-white px-2 py-1.5 text-xs text-[#1a1d24]"
               />
             )}
           </label>
           <Button type="submit" disabled={draftExamId.trim().length === 0}>
+            <Eye className="h-4 w-4" aria-hidden="true" />
             Monitor
           </Button>
         </form>
       </header>
 
       {examId.length === 0 ? (
-        <main className="p-6">
-          <p className="text-sm text-on-surface-muted">
-            Enter an exam id to begin monitoring its sessions.
-          </p>
-        </main>
+        <p className="rounded-lg border border-dashed border-[#cfd6e0] bg-white p-8 text-center text-sm text-[#8a93a2]">
+          Choose an exam to begin monitoring its sessions.
+        </p>
       ) : (
         <InvigilatorConsole
           key={examId}
@@ -188,15 +193,16 @@ function InvigilatorConsole({
   );
 
   return (
-    <main className="grid gap-6 p-6 lg:grid-cols-[1fr_minmax(20rem,24rem)]">
+    <main className="grid gap-6 lg:grid-cols-[1fr_minmax(20rem,24rem)]">
       <div className="flex flex-col gap-6">
         {/* Session Grid (Req 12.1, live session.update) */}
         <section aria-label="Monitored sessions">
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+          <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+            <Users className="h-4 w-4" aria-hidden="true" />
             Sessions
           </h2>
           {sessionViews.length === 0 ? (
-            <p className="text-sm text-on-surface-muted">
+            <p className="rounded-lg border border-dashed border-[#cfd6e0] bg-white p-6 text-center text-sm text-[#8a93a2]">
               No sessions reported yet for this exam.
             </p>
           ) : (
@@ -223,11 +229,12 @@ function InvigilatorConsole({
 
         {/* Live Alert Feed (Req 12.1, live alert.broadcast) */}
         <section aria-label="Alerts">
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-on-surface-muted">
+          <h2 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[#5a6270]">
+            <BellRing className="h-4 w-4" aria-hidden="true" />
             Live Alerts
           </h2>
           {alertViews.length === 0 ? (
-            <p className="text-sm text-on-surface-muted">No alerts yet.</p>
+            <p className="rounded-lg border border-dashed border-[#cfd6e0] bg-white p-6 text-center text-sm text-[#8a93a2]">No alerts yet.</p>
           ) : (
             <AlertFeed>
               {alertViews.map((alert) => (
@@ -247,7 +254,7 @@ function InvigilatorConsole({
       {/* Session detail panel: anomalies + terminate action */}
       <aside aria-label="Session detail">
         {selectedSessionId === null ? (
-          <p className="text-sm text-on-surface-muted">
+          <p className="rounded-lg border border-dashed border-[#cfd6e0] bg-white p-6 text-center text-sm text-[#8a93a2]">
             Select a session to view its anomalies.
           </p>
         ) : (
@@ -340,9 +347,9 @@ function SessionDetailPanel({
           type="button"
           onClick={onClose}
           aria-label="Close session detail"
-          className="focus-ring rounded text-on-surface-muted hover:text-on-surface"
+          className="focus-ring rounded p-1 text-[#8a93a2] hover:text-[#1a1d24]"
         >
-          ✕
+          <X className="h-4 w-4" aria-hidden="true" />
         </button>
       </div>
 

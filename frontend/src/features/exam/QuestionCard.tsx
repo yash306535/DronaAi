@@ -30,19 +30,19 @@ export function QuestionCard({
 
   return (
     <article
-      className="flex flex-col gap-3 rounded-md border border-navy-600 bg-navy-800 p-4"
+      className="flex flex-col gap-3 rounded-lg border border-[#e3e8ee] bg-white p-4 shadow-sm"
       aria-labelledby={`${groupId}-prompt`}
       onFocus={onView}
     >
       <header className="flex items-baseline justify-between gap-3">
-        <span className="text-xs font-semibold uppercase tracking-wider text-navy-400">
+        <span className="text-xs font-semibold uppercase tracking-wider text-[#8a93a2]">
           Question {question.index + 1}
-          <span className="ml-2 text-navy-400">· {question.topic}</span>
+          <span className="ml-2 text-[#8a93a2]">· {question.topic}</span>
         </span>
-        <span className="text-xs text-navy-400">{question.max_marks} marks</span>
+        <span className="text-xs text-[#8a93a2]">{question.max_marks} marks</span>
       </header>
 
-      <p id={`${groupId}-prompt`} className="text-sm leading-relaxed text-white">
+      <p id={`${groupId}-prompt`} className="text-sm leading-relaxed text-[#1a1d24]">
         {question.prompt}
       </p>
 
@@ -55,7 +55,7 @@ export function QuestionCard({
               <label
                 key={optionId}
                 htmlFor={optionId}
-                className="flex cursor-pointer items-center gap-2 rounded border border-navy-600 px-3 py-2 text-sm hover:border-navy-400"
+                className="flex cursor-pointer items-center gap-2 rounded-md border border-[#cfd6e0] px-3 py-2 text-sm text-[#1a1d24] transition-colors hover:border-navy-600 hover:bg-[#f4f6f9]"
               >
                 <input
                   id={optionId}
@@ -65,7 +65,7 @@ export function QuestionCard({
                   checked={value === option}
                   onChange={(e) => onChange(e.target.value)}
                   disabled={disabled}
-                  className="focus-ring"
+                  className="focus-ring accent-navy-800"
                 />
                 <span>{option}</span>
               </label>
@@ -80,7 +80,7 @@ export function QuestionCard({
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
           aria-label={`Answer for question ${question.index + 1}`}
-          className="focus-ring w-full rounded-md border border-navy-600 bg-navy-900 px-3 py-2 text-white placeholder:text-navy-400"
+          className="focus-ring w-full rounded-md border border-[#cfd6e0] bg-white px-3 py-2 text-[#1a1d24] placeholder:text-[#8a93a2]"
           placeholder="Enter a number"
         />
       ) : (
@@ -90,7 +90,7 @@ export function QuestionCard({
           onChange={(e) => onChange(e.target.value)}
           aria-label={`Answer for question ${question.index + 1}`}
           rows={4}
-          className="focus-ring w-full resize-y rounded-md border border-navy-600 bg-navy-900 px-3 py-2 text-white placeholder:text-navy-400"
+          className="focus-ring w-full resize-y rounded-md border border-[#cfd6e0] bg-white px-3 py-2 text-[#1a1d24] placeholder:text-[#8a93a2]"
           placeholder="Type your answer"
         />
       )}
