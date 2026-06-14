@@ -109,32 +109,30 @@ Webcam @ ~10 FPS → MediaPipe FaceMesh (browser, Stage 1)
 
 ## Project Structure
 
-```
-.
-├── backend/                 # FastAPI service
-│   ├── app/
-│   │   ├── main.py          # app factory, lifespan, middleware
-│   │   ├── core/            # config, security, errors, logging, events, ws
-│   │   ├── api/             # auth, exams, sessions, proctoring, analytics, ws
-│   │   ├── agents/          # guardian, architect, sentinel, analyst, herald, auditor
-│   │   ├── services/        # use-case orchestration
-│   │   ├── repositories/    # data access
-│   │   ├── models/          # SQLAlchemy ORM
-│   │   └── schemas/         # Pydantic schemas
-│   ├── alembic/             # database migrations
-│   ├── tests/               # pytest + hypothesis
-│   ├── render.yaml          # Render blueprint
-│   └── requirements.txt
-├── frontend/                # React + Vite SPA
-│   ├── src/
-│   │   ├── app/             # router, layout
-│   │   ├── theme/           # design tokens (navy/crimson)
-│   │   ├── components/      # shared UI
-│   │   ├── features/        # exam, dashboard, invigilator, analytics
-│   │   ├── lib/             # api client, ws client, mediapipe
-│   │   └── types/           # shared TS types
-│   └── vercel.json
-└── DEPLOY.md                # deployment guide
+```mermaid
+mindmap
+  root(("🧠 DRONA AI"))
+    ("⚙️ backend · FastAPI")
+      ("📦 app")
+        ("🚀 main.py<br/>app factory · lifespan")
+        ("🔧 core<br/>config · security · events · ws")
+        ("🔌 api<br/>auth · exams · sessions · proctoring · analytics")
+        ("🤖 agents<br/>guardian · architect · sentinel<br/>analyst · herald · auditor")
+        ("🧩 services<br/>use-case orchestration")
+        ("🗄️ repositories<br/>data access")
+        ("📐 models · schemas")
+      ("🧬 alembic<br/>migrations")
+      ("✅ tests<br/>pytest · hypothesis")
+      ("☁️ render.yaml")
+    ("💻 frontend · React + Vite")
+      ("🗺️ app<br/>router · layout")
+      ("🎨 theme<br/>navy/crimson tokens")
+      ("🧱 components<br/>shared UI")
+      ("✨ features<br/>exam · dashboard<br/>invigilator · analytics")
+      ("🔗 lib<br/>api · ws · mediapipe")
+      ("🏷️ types")
+      ("▲ vercel.json")
+    ("📖 DEPLOY.md")
 ```
 
 ---
