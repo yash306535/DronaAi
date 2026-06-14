@@ -50,6 +50,8 @@ CrewAI · OpenAI / Anthropic · `hypothesis` (property-based tests)
 
 ## Architecture
 
+![Architecture Diagram](./architecture.png)
+
 ```mermaid
 graph TB
     subgraph Clients["🖥️ Client Layer · React + Vite (Vercel)"]
