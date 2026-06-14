@@ -50,24 +50,47 @@ CrewAI · OpenAI / Anthropic · `hypothesis` (property-based tests)
 
 ## Architecture
 
-```
-┌─────────────────────────── Clients (Vercel) ───────────────────────────┐
-│  Student Portal        Admin Dashboard          Invigilator Console     │
-│  React + MediaPipe     React + Recharts + WS     React + WS             │
-└───────────────┬──────────────────┬──────────────────────┬──────────────┘
-                │ REST + WebSocket  │                      │
-┌───────────────▼──────────────────▼──────────────────────▼──────────────┐
-│                        FastAPI Gateway (Render)                         │
-│   Auth & RBAC (JWT) · Rate limiting · CORS · Centralized errors         │
-├─────────────────────────────────────────────────────────────────────────┤
-│   Services  →  Agent Orchestrator (CrewAI)  →  Event Bus  →  WS Manager  │
-│   Guardian · Architect · Sentinel · Analyst · Herald · Auditor          │
-├─────────────────────────────────────────────────────────────────────────┤
-│   Repositories  →  SQLAlchemy models  →  SQLite / PostgreSQL            │
-└─────────────────────────────────────────────────────────────────────────┘
-                │ escalated frames only
-                ▼
-        OpenAI Vision (Stage-2 confirmation)
+```mermaid
+graph TB
+    subgraph Clients["🖥️ Client Layer · React + Vite (Vercel)"]
+        SP["Student Portal<br/>MediaPipe proctoring"]
+        AD["Admin Dashboard<br/>live mission control"]
+        IV["Invigilator Console"]
+    end
+
+    subgraph Gateway["⚡ FastAPI Gateway (Render)"]
+        AUTH["JWT Auth & RBAC · Rate Limit · CORS"]
+        WS["WebSocket Manager"]
+    end
+
+    subgraph Core["🧠 Application Core"]
+        ORCH["Agent Orchestrator · CrewAI"]
+        BUS["Event Bus"]
+    end
+
+    subgraph Agents["🤖 Autonomous Agents"]
+        G["Guardian"]
+        A["Architect"]
+        S["Sentinel"]
+        AN["Analyst"]
+        H["Herald"]
+        AU["Auditor"]
+    end
+
+    subgraph Data["💾 Persistence & External"]
+        DB[("PostgreSQL")]
+        VIS["OpenAI Vision"]
+        LLM["LLM"]
+    end
+
+    SP & AD & IV -->|REST + WS| AUTH
+    AUTH --> ORCH
+    ORCH --> BUS
+    BUS --> G & A & S & AN & H & AU
+    G -->|Stage-2 escalation| VIS
+    A & AN & AU --> LLM
+    H --> WS --> AD & IV
+    Agents --> DB
 ```
 
 ### Two-Stage Proctoring
