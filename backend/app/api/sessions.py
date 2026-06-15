@@ -35,9 +35,11 @@ from app.core.db import get_db
 from app.core.events import EventBus
 from app.models.enums import Role
 from app.repositories.answer import AnswerRepository
+from app.repositories.anomaly import AnomalyRepository
 from app.repositories.paper import PaperRepository
 from app.repositories.session import ExamSessionRepository
 from app.repositories.session_event import SessionEventRepository
+from app.schemas.anomaly import AnomalyRead
 from app.schemas.session import (
     AnswerRead,
     AnswerSubmit,
@@ -134,6 +136,20 @@ async def ingest_events(
     session_row = service.get_session(session_id)
     enforce_student_ownership(user, session_row.student_id)
     return await service.ingest_events(session_row, batch)
+
+
+@router.get("/{session_id}/anomalies", response_model=list[AnomalyRead])
+def list_session_anomalies(
+    session_id: str,
+    user: AuthUser = Depends(require_role(*list(Role))),
+    service: SessionService = Depends(get_session_service),
+    db: Session = Depends(get_db),
+) -> list[AnomalyRead]:
+    """List anomalies for a session (own student, invigilator, or admin)."""
+    session_row = service.get_session(session_id)
+    enforce_student_ownership(user, session_row.student_id)
+    rows = AnomalyRepository(db).list_for_session(session_id)
+    return [AnomalyRead.model_validate(row) for row in rows]
 
 
 @router.post("/{session_id}/terminate", response_model=SessionRead)

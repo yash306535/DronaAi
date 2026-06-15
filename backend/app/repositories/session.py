@@ -37,14 +37,36 @@ class ExamSessionRepository(BaseRepository):
     def get_for_student(
         self, exam_id: str, student_id: str
     ) -> ExamSession | None:
-        """Return the session for ``(exam_id, student_id)`` or ``None``."""
+        """Return the most relevant session for ``(exam_id, student_id)``.
+
+        A student should normally have a single session per exam, but to be
+        robust against duplicate rows (e.g. demo/seed data) this never raises on
+        multiple matches: it prefers an ``active`` session, then a
+        ``not_started`` one, then the most recently started, and otherwise the
+        first row.
+        """
 
         def _work(session):
             stmt = select(ExamSession).where(
                 ExamSession.exam_id == exam_id,
                 ExamSession.student_id == student_id,
             )
-            return session.execute(stmt).scalar_one_or_none()
+            rows = list(session.execute(stmt).scalars().all())
+            if not rows:
+                return None
+            priority = {
+                SessionStatus.ACTIVE: 0,
+                SessionStatus.NOT_STARTED: 1,
+                SessionStatus.SUBMITTED: 2,
+                SessionStatus.TERMINATED: 3,
+            }
+            rows.sort(
+                key=lambda r: (
+                    priority.get(r.status, 9),
+                    -(r.started_at.timestamp() if r.started_at else 0),
+                )
+            )
+            return rows[0]
 
         return self._run(_work, commit=False)
 

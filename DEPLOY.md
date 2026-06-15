@@ -61,7 +61,13 @@ alembic revision --autogenerate -m "describe change"   # create a new migration
 
 | Key | Notes |
 |-----|-------|
-| `VITE_API_BASE_URL` | Base URL of the deployed Render backend API, including the `/api/v1` prefix, e.g. `https://drona-api.onrender.com/api/v1` (defaults to `http://localhost:8000/api/v1` in dev). Vite inlines `VITE_`-prefixed vars at build time, so set it in the Vercel project settings before building. |
+| `VITE_API_BASE_URL` | Base URL of the deployed Render backend API, including the `/api/v1` prefix, e.g. `https://dronaai-wvnc.onrender.com/api/v1` (defaults to `http://localhost:8000/api/v1` in dev). |
+| `VITE_WS_BASE_URL` | WebSocket origin of the backend, e.g. `wss://dronaai-wvnc.onrender.com` (defaults to `ws://localhost:8000` in dev). Drives the live dashboard/invigilator rooms. |
+
+Both are committed in `frontend/.env.production`, which Vite loads automatically
+for `npm run build`, so the Vercel build targets Render without any dashboard
+config. Vite inlines `VITE_`-prefixed vars at build time. To override per
+environment, set the same keys in the Vercel project settings.
 
 After deploying the frontend, add its origin to the backend's
 `FRONTEND_ORIGINS` so CORS permits the SPA.

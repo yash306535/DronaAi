@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components";
 import { tokenStore, type TokenStore } from "@/lib/tokenStore";
+import { apiClient } from "@/lib/apiClient";
 import {
   downloadExamReportPdf,
   fetchExamAnalytics,
@@ -66,7 +67,7 @@ export function AnalyticsView({
   token,
   store = tokenStore,
   api,
-  exams = [],
+  exams,
   initialExamId,
   data,
 }: AnalyticsViewProps) {
@@ -74,9 +75,26 @@ export function AnalyticsView({
   // injected by the shared apiClient; this keeps the surface consistent).
   void (token ?? store.getAccessToken());
 
-  const [examId, setExamId] = useState<string>(
-    initialExamId ?? exams[0]?.id ?? "",
-  );
+  // Populate the exam selector from the API when an explicit list isn't given.
+  const [fetchedExams, setFetchedExams] = useState<AnalyticsExamOption[]>([]);
+  useEffect(() => {
+    if (exams !== undefined) return;
+    let cancelled = false;
+    apiClient
+      .listExams()
+      .then((list) => {
+        if (!cancelled) {
+          setFetchedExams(list.map((e) => ({ id: e.id, title: e.title })));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [exams]);
+  const examOptions = exams ?? fetchedExams;
+
+  const [examId, setExamId] = useState<string>(initialExamId ?? "");
   const [draftExamId, setDraftExamId] = useState<string>(examId);
 
   return (
@@ -96,7 +114,7 @@ export function AnalyticsView({
         >
           <label className="flex items-center gap-2 text-xs text-[#5a6270]">
             <span className="sr-only">Exam</span>
-            {exams.length > 0 ? (
+            {examOptions.length > 0 ? (
               <select
                 value={draftExamId}
                 onChange={(e) => setDraftExamId(e.target.value)}
@@ -104,7 +122,7 @@ export function AnalyticsView({
                 className="focus-ring rounded-md border border-[#cfd6e0] bg-white px-2 py-1.5 text-xs text-[#1a1d24]"
               >
                 <option value="">Choose an exam…</option>
-                {exams.map((exam) => (
+                {examOptions.map((exam) => (
                   <option key={exam.id} value={exam.id}>
                     {exam.title}
                   </option>

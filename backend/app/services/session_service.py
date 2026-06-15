@@ -92,19 +92,29 @@ class SessionService:
     # -- start ---------------------------------------------------------------
 
     def start_session(self, exam_id: str, student_id: str) -> tuple[SessionRead, StudentPaper]:
-        """Create an ``active`` session and return its answer-key-free paper.
+        """Create or (re)open the student's session and return their own paper.
 
-        Requirement 5.1: when the student has no existing ``active``/``submitted``
-        session for the exam, create one with status ``active`` and return the
-        student's own paper. Requirement 5.2: when such a session already exists,
-        reject and leave it unchanged.
+        Requirement 5.1: when the student has no session for the exam, create one
+        with status ``active``. To keep the flow idempotent and demo-repeatable,
+        an existing session for the exam is simply re-opened in place — a
+        ``not_started`` / ``submitted`` / ``terminated`` session is moved back to
+        ``active`` rather than rejected — so a single seeded account can take the
+        exam again and again without re-seeding. No duplicate session is ever
+        created.
         """
         existing = self._sessions.get_for_student(exam_id, student_id)
-        if existing is not None and existing.status in _BLOCKING_START_STATUSES:
-            # Reject; the existing session is returned untouched (5.2).
-            raise ValidationError(
-                "An active or submitted session already exists for this exam.",
-                code=SESSION_EXISTS_CODE,
+        if existing is not None:
+            if existing.status != SessionStatus.ACTIVE:
+                # Re-open any non-active session in place (resume / retake).
+                self._sessions.set_status(existing.id, SessionStatus.ACTIVE)
+                existing = self._sessions.get(existing.id) or existing
+            logger.info(
+                "session.resumed",
+                extra={"sessionId": existing.id, "examId": exam_id},
+            )
+            return (
+                SessionRead.model_validate(existing),
+                self._build_student_paper(existing.paper_id, exam_id),
             )
 
         paper = self._papers.get_for_student(exam_id, student_id)

@@ -27,10 +27,14 @@ import {
   connectionSeverity,
   connectionStatus,
   formatClockTime,
+  restAlertToView,
+  restSessionToView,
   toAlertView,
   toSessionView,
   truncateMessageText,
+  type AlertView,
   type ConnectionStatus,
+  type SessionView,
 } from "@/features/dashboard/dashboardView";
 import { getSeverityColors } from "@/theme";
 
@@ -57,7 +61,7 @@ export interface DashboardViewProps {
    */
   exams?: DashboardExamOption[];
   /** API client used to fetch exams when `exams` is not supplied. */
-  api?: Pick<ApiClient, "listExams">;
+  api?: Pick<ApiClient, "listExams" | "listExamSessions" | "listExamAlerts">;
   /**
    * Pre-resolved live state. When provided the internal socket is bypassed —
    * used by tests/storybook to render deterministic snapshots without a server.
@@ -159,13 +163,54 @@ export function DashboardView({
   }, [examOptions, examId]);
   const clock = useLiveClock();
 
+  // Seeded/historical data for the selected exam, loaded via REST so the
+  // dashboard is populated immediately (the live socket only streams new
+  // events). Live state is overlaid on top of this baseline.
+  const [restSessions, setRestSessions] = useState<SessionView[]>([]);
+  const [restAlerts, setRestAlerts] = useState<AlertView[]>([]);
+  useEffect(() => {
+    if (state !== undefined || !examId) return;
+    let cancelled = false;
+    if (api.listExamSessions) {
+      api
+        .listExamSessions(examId)
+        .then((rows) => {
+          if (!cancelled) setRestSessions(rows.map(restSessionToView));
+        })
+        .catch(() => undefined);
+    }
+    if (api.listExamAlerts) {
+      api
+        .listExamAlerts(examId)
+        .then((rows) => {
+          if (!cancelled) setRestAlerts(rows.map(restAlertToView));
+        })
+        .catch(() => undefined);
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [examId, api, state]);
+
   const status = connectionStatus(dash.connected, dash.degraded);
   const agentSlots = useMemo(() => buildAgentSlots(dash.agents), [dash.agents]);
-  const alertViews = useMemo(() => dash.alerts.map(toAlertView), [dash.alerts]);
-  const sessionViews = useMemo(
-    () => Object.values(dash.sessions).map(toSessionView),
-    [dash.sessions],
-  );
+
+  // Merge live + seeded alerts (live first), de-duplicated by id.
+  const alertViews = useMemo(() => {
+    const live = dash.alerts.map(toAlertView);
+    const seen = new Set(live.map((a) => a.id));
+    return [...live, ...restAlerts.filter((a) => !seen.has(a.id))];
+  }, [dash.alerts, restAlerts]);
+
+  // Merge live + seeded sessions; a live update overrides the seeded baseline.
+  const sessionViews = useMemo(() => {
+    const merged = new Map<string, SessionView>();
+    for (const s of restSessions) merged.set(s.sessionId, s);
+    for (const s of Object.values(dash.sessions).map(toSessionView)) {
+      merged.set(s.sessionId, s);
+    }
+    return Array.from(merged.values());
+  }, [dash.sessions, restSessions]);
 
   return (
     <div className="flex flex-col gap-6 text-on-surface">

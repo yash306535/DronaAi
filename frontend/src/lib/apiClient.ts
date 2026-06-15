@@ -8,7 +8,7 @@
 //   fails, clear the store and redirect to the login page.
 // - Expose login / refresh / me helpers plus generic get/post helpers.
 
-import type { ExamRead, TokenPair, UserRead } from "@/types";
+import type { Alert, ExamRead, SessionRead, TokenPair, UserRead } from "@/types";
 import { tokenStore, type TokenStore } from "@/lib/tokenStore";
 
 /** Default API base URL when no env override is provided. */
@@ -279,6 +279,23 @@ export class ApiClient {
   /** List exams visible to the caller (admin / invigilator). */
   listExams(): Promise<ExamRead[]> {
     return this.get<ExamRead[]>("/exams");
+  }
+
+  /** List exams currently open to sit (any authenticated user, incl. students). */
+  listAvailableExams(): Promise<ExamRead[]> {
+    return this.get<ExamRead[]>("/exams/available");
+  }
+
+  /** List all sessions for an exam (admin/invigilator monitoring). */
+  listExamSessions(examId: string): Promise<SessionRead[]> {
+    return this.get<SessionRead[]>(
+      `/exams/${encodeURIComponent(examId)}/sessions`,
+    );
+  }
+
+  /** List alerts across an exam's sessions, newest first (admin/invigilator). */
+  listExamAlerts(examId: string): Promise<Alert[]> {
+    return this.get<Alert[]>(`/exams/${encodeURIComponent(examId)}/alerts`);
   }
 
   /** Clear stored tokens (local logout). */

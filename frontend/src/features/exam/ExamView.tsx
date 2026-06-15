@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CheckCircle2, Clock, Send } from "lucide-react";
+import { BookOpen, CheckCircle2, Clock, PlayCircle, Send } from "lucide-react";
 import { Button } from "@/components";
 import { apiClient, type ApiClient } from "@/lib/apiClient";
-import type { StudentPaper } from "@/types";
+import type { ExamRead, StudentPaper } from "@/types";
 import {
   saveAnswer,
   startSession,
@@ -33,7 +33,7 @@ export interface ExamViewProps {
 }
 
 /** Lifecycle phases of the exam portal screen. */
-type Phase = "loading" | "active" | "submitting" | "submitted" | "error";
+type Phase = "choosing" | "loading" | "active" | "submitting" | "submitted" | "error";
 
 function resolveExamId(explicit?: string): string | null {
   if (explicit) return explicit;
@@ -60,7 +60,12 @@ export function ExamView({
   autosaveDebounceMs = DEFAULT_AUTOSAVE_DEBOUNCE_MS,
   disableProctoring = false,
 }: ExamViewProps) {
-  const [phase, setPhase] = useState<Phase>("loading");
+  const [chosenExamId, setChosenExamId] = useState<string | null>(() =>
+    resolveExamId(examId),
+  );
+  const [phase, setPhase] = useState<Phase>(() =>
+    resolveExamId(examId) ? "loading" : "choosing",
+  );
   const [error, setError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [paper, setPaper] = useState<StudentPaper | null>(null);
@@ -85,18 +90,14 @@ export function ExamView({
   });
   const { start: startProctoring, stop: stopProctoring } = proctoring;
 
-  // --- Start the session on mount -----------------------------------------
+  // --- Start the session once an exam is chosen ---------------------------
   useEffect(() => {
+    if (!chosenExamId) return;
     let cancelled = false;
-    const id = resolveExamId(examId);
-    if (!id) {
-      setPhase("error");
-      setError("No exam specified.");
-      return;
-    }
+    setPhase("loading");
     void (async () => {
       try {
-        const res: StartSessionResponse = await startSession(id, api);
+        const res: StartSessionResponse = await startSession(chosenExamId, api);
         if (cancelled) return;
         setSessionId(res.id);
         setPaper(res.paper);
@@ -111,7 +112,7 @@ export function ExamView({
     return () => {
       cancelled = true;
     };
-  }, [examId, api]);
+  }, [chosenExamId, api]);
 
   // Start/stop proctoring with the active session.
   useEffect(() => {
@@ -188,6 +189,10 @@ export function ExamView({
   });
 
   // --- Render --------------------------------------------------------------
+  if (phase === "choosing") {
+    return <ExamPicker onSelect={setChosenExamId} />;
+  }
+
   if (phase === "loading") {
     return (
       <section className="mx-auto max-w-2xl">
@@ -277,6 +282,82 @@ export function ExamView({
           videoRef={proctoring.videoRef}
         />
       </div>
+    </section>
+  );
+}
+
+/**
+ * Exam chooser shown when the student arrives at the portal without a specific
+ * exam id. Lists the exams currently open to sit (`GET /exams/available`) and
+ * lets the student start one. Selecting an exam drives the session start in the
+ * parent {@link ExamView}.
+ */
+function ExamPicker({ onSelect }: { onSelect: (examId: string) => void }) {
+  const [exams, setExams] = useState<ExamRead[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    apiClient
+      .listAvailableExams()
+      .then((rows) => {
+        if (!cancelled) setExams(rows);
+      })
+      .catch(() => {
+        if (!cancelled) setError("Could not load available exams.");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return (
+    <section className="mx-auto max-w-2xl">
+      <header className="mb-4 flex items-center gap-2">
+        <BookOpen className="h-6 w-6 text-navy-800" aria-hidden="true" />
+        <h1 className="text-2xl font-semibold">Available exams</h1>
+      </header>
+
+      {error && (
+        <p role="alert" className="rounded-md bg-bg-danger px-3 py-2 text-sm text-danger">
+          {error}
+        </p>
+      )}
+
+      {exams === null && !error ? (
+        <p className="text-sm text-[#5a6270]">Loading exams…</p>
+      ) : exams && exams.length === 0 ? (
+        <p className="rounded-lg border border-dashed border-[#cfd6e0] bg-white p-8 text-center text-sm text-[#8a93a2]">
+          No exams are open to sit right now.
+        </p>
+      ) : (
+        <ul className="flex flex-col gap-3">
+          {(exams ?? []).map((exam) => (
+            <li
+              key={exam.id}
+              className="flex items-center justify-between gap-4 rounded-lg border border-[#e3e8ee] bg-white p-4 shadow-sm"
+            >
+              <div className="min-w-0">
+                <div className="truncate font-semibold text-[#1a1d24]">
+                  {exam.title}
+                </div>
+                <div className="mt-0.5 flex items-center gap-2 text-xs text-[#5a6270]">
+                  <span>{exam.subject}</span>
+                  <span aria-hidden="true">·</span>
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                    {exam.duration_minutes} min
+                  </span>
+                </div>
+              </div>
+              <Button onClick={() => onSelect(exam.id)}>
+                <PlayCircle className="h-4 w-4" aria-hidden="true" />
+                Start
+              </Button>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

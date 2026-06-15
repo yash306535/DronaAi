@@ -101,6 +101,19 @@ class ExamService:
             return []
         return [ExamRead.model_validate(exam) for exam in self._exams.list_all()]
 
+    def list_available_exams(self) -> list[ExamRead]:
+        """List exams currently open to sit (status ``live``).
+
+        Available to any authenticated user — students use this to discover the
+        exam(s) they can start. ``ExamRead`` carries no answer keys (only the
+        blueprint, timing, and metadata), so it is safe to expose to students.
+        """
+        return [
+            ExamRead.model_validate(exam)
+            for exam in self._exams.list_all()
+            if exam.status == ExamStatus.LIVE
+        ]
+
     def get_exam(self, exam_id: str) -> Exam:
         """Return the exam row or raise :class:`NotFoundError`."""
         exam = self._exams.get(exam_id)

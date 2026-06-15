@@ -14,7 +14,13 @@ import {
   StatPill,
 } from "@/components";
 import { tokenStore, type TokenStore } from "@/lib/tokenStore";
-import { toAlertView, toSessionView } from "@/features/dashboard";
+import { apiClient } from "@/lib/apiClient";
+import {
+  restAlertToView,
+  restSessionToView,
+  toAlertView,
+  toSessionView,
+} from "@/features/dashboard";
 import {
   fetchSessionAnomalies,
   terminateSession,
@@ -79,14 +85,32 @@ export function InvigilatorView({
   store = tokenStore,
   socketOptions,
   api,
-  exams = [],
+  exams,
   initialExamId,
   state,
 }: InvigilatorViewProps) {
   const resolvedToken = token ?? store.getAccessToken() ?? "";
-  const [examId, setExamId] = useState<string>(
-    initialExamId ?? exams[0]?.id ?? "",
-  );
+
+  // Populate the exam selector from the API when an explicit list isn't given.
+  const [fetchedExams, setFetchedExams] = useState<InvigilatorExamOption[]>([]);
+  useEffect(() => {
+    if (exams !== undefined) return;
+    let cancelled = false;
+    apiClient
+      .listExams()
+      .then((list) => {
+        if (!cancelled) {
+          setFetchedExams(list.map((e) => ({ id: e.id, title: e.title })));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [exams]);
+  const examOptions = exams ?? fetchedExams;
+
+  const [examId, setExamId] = useState<string>(initialExamId ?? "");
   const [draftExamId, setDraftExamId] = useState<string>(examId);
 
   return (
@@ -106,7 +130,7 @@ export function InvigilatorView({
         >
           <label className="flex items-center gap-2 text-xs text-[#5a6270]">
             <span className="sr-only">Exam</span>
-            {exams.length > 0 ? (
+            {examOptions.length > 0 ? (
               <select
                 value={draftExamId}
                 onChange={(e) => setDraftExamId(e.target.value)}
@@ -114,7 +138,7 @@ export function InvigilatorView({
                 className="focus-ring rounded-md border border-[#cfd6e0] bg-white px-2 py-1.5 text-xs text-[#1a1d24]"
               >
                 <option value="">Choose an exam…</option>
-                {exams.map((exam) => (
+                {examOptions.map((exam) => (
                   <option key={exam.id} value={exam.id}>
                     {exam.title}
                   </option>
@@ -183,14 +207,47 @@ function InvigilatorConsole({
     null,
   );
 
-  const sessionViews = useMemo(
-    () => Object.values(console_.sessions).map(toSessionView),
-    [console_.sessions],
-  );
-  const alertViews = useMemo(
-    () => console_.alerts.map(toAlertView),
-    [console_.alerts],
-  );
+  // Seeded/historical sessions + alerts for this exam, loaded via REST so the
+  // console is populated immediately (the socket only streams new events).
+  const [restSessions, setRestSessions] = useState<
+    ReturnType<typeof restSessionToView>[]
+  >([]);
+  const [restAlerts, setRestAlerts] = useState<
+    ReturnType<typeof restAlertToView>[]
+  >([]);
+  useEffect(() => {
+    if (state !== undefined || !examId) return;
+    let cancelled = false;
+    apiClient
+      .listExamSessions(examId)
+      .then((rows) => {
+        if (!cancelled) setRestSessions(rows.map(restSessionToView));
+      })
+      .catch(() => undefined);
+    apiClient
+      .listExamAlerts(examId)
+      .then((rows) => {
+        if (!cancelled) setRestAlerts(rows.map(restAlertToView));
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [examId, state]);
+
+  const sessionViews = useMemo(() => {
+    const merged = new Map<string, ReturnType<typeof toSessionView>>();
+    for (const s of restSessions) merged.set(s.sessionId, s);
+    for (const s of Object.values(console_.sessions).map(toSessionView)) {
+      merged.set(s.sessionId, s);
+    }
+    return Array.from(merged.values());
+  }, [console_.sessions, restSessions]);
+  const alertViews = useMemo(() => {
+    const live = console_.alerts.map(toAlertView);
+    const seen = new Set(live.map((a) => a.id));
+    return [...live, ...restAlerts.filter((a) => !seen.has(a.id))];
+  }, [console_.alerts, restAlerts]);
 
   return (
     <main className="grid gap-6 lg:grid-cols-[1fr_minmax(20rem,24rem)]">

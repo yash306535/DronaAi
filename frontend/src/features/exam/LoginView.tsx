@@ -5,11 +5,14 @@ import {
   Bot,
   Eye,
   EyeOff,
+  GraduationCap,
   Lock,
   LogIn,
+  MonitorCheck,
   ScanFace,
   ShieldCheck,
   Sparkles,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components";
 import { apiClient, ApiError, type ApiClient } from "@/lib/apiClient";
@@ -31,6 +34,14 @@ const HIGHLIGHTS = [
   { icon: Sparkles, text: "Explainable integrity scores" },
 ];
 
+/** One-click demo identities. The student maps to the seeded account that has
+ *  not yet started the live exam, so the take-exam flow works out of the box. */
+const DEMO_ACCOUNTS = [
+  { role: "Admin", email: "admin@drona.ai", password: "AdminPass123!" },
+  { role: "Invigilator", email: "invigilator@drona.ai", password: "InvigilatorPass123!" },
+  { role: "Student", email: "student4@drona.ai", password: "StudentPass123!" },
+] as const;
+
 /**
  * Login view: email + password → `apiClient.login`, then routes the user to
  * their role's home — admins to the dashboard, invigilators to the console,
@@ -46,12 +57,11 @@ export function LoginView({ api = apiClient, redirectTo }: LoginViewProps) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function doLogin(loginEmail: string, loginPassword: string) {
     setError(null);
     setSubmitting(true);
     try {
-      await api.login(email, password);
+      await api.login(loginEmail, loginPassword);
       const profile = await api.me();
       await refresh();
       navigate(redirectTo ?? homePathForRole(profile.role));
@@ -64,6 +74,17 @@ export function LoginView({ api = apiClient, redirectTo }: LoginViewProps) {
     } finally {
       setSubmitting(false);
     }
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void doLogin(email, password);
+  }
+
+  function handleDemo(account: (typeof DEMO_ACCOUNTS)[number]) {
+    setEmail(account.email);
+    setPassword(account.password);
+    void doLogin(account.email, account.password);
   }
 
   return (
@@ -183,6 +204,37 @@ export function LoginView({ api = apiClient, redirectTo }: LoginViewProps) {
               {submitting ? "Signing in…" : "Sign in"}
             </Button>
           </form>
+
+          <div className="mt-8">
+            <div className="flex items-center gap-3 text-xs text-[#8a93a2]">
+              <span className="h-px flex-1 bg-[#e3e8ee]" />
+              <span className="flex items-center gap-1.5">
+                <Zap className="h-3.5 w-3.5" aria-hidden="true" />
+                Quick demo access
+              </span>
+              <span className="h-px flex-1 bg-[#e3e8ee]" />
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {DEMO_ACCOUNTS.map((account) => (
+                <button
+                  key={account.role}
+                  type="button"
+                  onClick={() => handleDemo(account)}
+                  disabled={submitting}
+                  className="focus-ring flex flex-col items-center gap-1 rounded-lg border border-[#e3e8ee] bg-white px-2 py-3 text-xs font-medium text-[#1a1d24] transition-colors hover:border-navy-600 hover:bg-[#f4f6f9] disabled:opacity-60"
+                >
+                  {account.role === "Admin" ? (
+                    <ShieldCheck className="h-5 w-5 text-navy-800" aria-hidden="true" />
+                  ) : account.role === "Invigilator" ? (
+                    <MonitorCheck className="h-5 w-5 text-navy-800" aria-hidden="true" />
+                  ) : (
+                    <GraduationCap className="h-5 w-5 text-navy-800" aria-hidden="true" />
+                  )}
+                  {account.role}
+                </button>
+              ))}
+            </div>
+          </div>
         </section>
       </div>
     </div>

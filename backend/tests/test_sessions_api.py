@@ -232,14 +232,23 @@ def test_start_returns_paper_without_answer_key(client, seeded) -> None:
     assert question["prompt"] == "2 + 2 = ?"
 
 
-def test_start_rejects_when_active_session_exists(client, seeded, session_factory) -> None:
-    """5.2: a second start with an existing active session is rejected."""
-    _make_active_session(session_factory, seeded)
+def test_start_resumes_when_active_session_exists(client, seeded, session_factory) -> None:
+    """A restart with an existing active session resumes it (idempotent start).
+
+    The portal auto-starts on mount, so starting an already-active session must
+    return that same session plus the student's paper rather than erroring —
+    this keeps the take-exam flow repeatable for demos and refreshes.
+    """
+    sid = _make_active_session(session_factory, seeded)
     resp = client.post(
         f"/sessions/{seeded['exam']}/start", headers=_auth(seeded["student"], Role.STUDENT)
     )
-    assert resp.status_code == 422
-    assert resp.json()["error"]["code"] == SESSION_EXISTS_CODE
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["id"] == sid
+    assert body["status"] == SessionStatus.ACTIVE.value
+    assert "answer_key" not in resp.text
+    assert len(body["paper"]["questions"]) > 0
 
 
 # --- answer rejection on non-active session (5.5, 5.10) --------------------

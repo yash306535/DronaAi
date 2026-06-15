@@ -240,3 +240,34 @@ export function toSessionView(session: SessionUpdate): SessionView {
     status: toSessionStatus(session.status),
   };
 }
+
+/** Map a REST `SessionRead` row (0..100 integrity) to SessionTile-ready props. */
+export function restSessionToView(session: {
+  id: string;
+  student_id: string;
+  integrity_score: number;
+  status: string;
+}): SessionView {
+  return {
+    sessionId: session.id,
+    name: session.id.slice(0, 8),
+    integrityPercent: toIntegrityPercent(session.integrity_score),
+    status: toSessionStatus(session.status),
+  };
+}
+
+/** Map a REST `Alert` row to AlertItem-ready props. */
+export function restAlertToView(alert: {
+  id: string;
+  severity: AlertSeverity | string;
+  message: string;
+  created_at: string;
+}): AlertView {
+  return {
+    id: alert.id,
+    severity: toAlertSeverity(alert.severity),
+    title: alert.message,
+    reasons: [],
+    timestamp: formatClockTime(alert.created_at),
+  };
+}

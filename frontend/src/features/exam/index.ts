@@ -13,3 +13,5 @@ export { QuestionCard } from "./QuestionCard";
 export type { QuestionCardProps } from "./QuestionCard";
 export { ExamView } from "./ExamView";
 export type { ExamViewProps } from "./ExamView";
+export { ExamLanding } from "./ExamLanding";
+export type { ExamLandingProps } from "./ExamLanding";

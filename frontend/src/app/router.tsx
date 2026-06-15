@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { Layout } from "@/app/Layout";
-import { ExamView, LoginView } from "@/features/exam";
+import { ExamLanding, LoginView } from "@/features/exam";
 import { DashboardView } from "@/features/dashboard";
 import { InvigilatorView } from "@/features/invigilator";
 import { AnalyticsView } from "@/features/analytics";
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="/login" replace /> },
       { path: "login", element: <LoginView /> },
-      { path: "exam", element: <ExamView /> },
+      { path: "exam", element: <ExamLanding /> },
       { path: "dashboard", element: <DashboardView /> },
       { path: "invigilator", element: <InvigilatorView /> },
       { path: "analytics", element: <AnalyticsView /> },
